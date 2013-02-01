@@ -1,5 +1,6 @@
 var sqsConnect = require('../serverCommon/lib/sqsConnect'),
     imapConnect = require ('./lib/imapConnect'),
+    imapRetrieve = require ('./lib/imapRetrieve'),
     constants = require ('./constants'),
     winston = require (constants.SERVER_COMMON + '/lib/winstonWrapper').winston
 
@@ -15,7 +16,9 @@ sqsConnect.pollMailDownloadQueue(function (message, callback) {
   imapConnect.openMailbox (connection, function (err) {
     winston.info ('connection opened for user: ' + email)
 
+    imapRetrieve.getMessagesWithAttachments (connection, 'January 1st, 2013', function (err) {
 
+    })
 
   })
 
