@@ -24,8 +24,8 @@ module.exports = {
       , bucket: awsBucket
   }
   , google : {
-    appId : '322265756723.apps.googleusercontent.com',
-    appSecret : '1XCvBn-_x-MO7vqwgmwh_UJP'
+    appId : '1020629660865.apps.googleusercontent.com',
+    appSecret : 'pFvM2J42oBnUFD9sI1ZwITFE'
   }
   , express : {
       secret: 'IITYWYBAD4487'

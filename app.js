@@ -1,6 +1,6 @@
 var express = require('express'),
-    sqsConnect = require('./lib/sqsConnect')
-
+    sqsConnect = require('../serverCommon/lib/sqsConnect'),
+    winston = require ('../serverCommon/lib/winstonWrapper').winston
 
 var app = express()
 
@@ -41,6 +41,13 @@ app.get('/health', function (req, res) {
 })
 
 app.listen (app.get('port'), function () {
-  console.log("Express server listening on port %d in %s mode", app.get('port'), app.settings.env)
-  sqsConnect.startPollingForDownloadJobs()
+  winston.info("Express server listening on port " + app.get('port') + " in " + app.settings.env + " mode")
+  sqsConnect.pollMailDownloadQueue(function (message, callback) {
+    console.log (message)
+    // after 5 seconds, handle message
+    setTimeout (function () {
+      console.log ('timeout call done')
+      callback (null)
+    }, 10000)
+  }, 3)
 })
