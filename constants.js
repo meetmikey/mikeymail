@@ -24,4 +24,6 @@ define('INDEX_NAME', 'document_index')
 
 define('SERVER_COMMON', process.env.SERVER_COMMON)
 
-define('MAX_DOWNLOAD_JOBS', 5)
+define('MAX_DOWNLOAD_JOBS', 1)
+
+define('AWS_RAW_MSG_DIR', '/rawEmail')
