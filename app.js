@@ -3,7 +3,10 @@ var constants = require ('./constants'),
     imapRetrieve = require ('./lib/imapRetrieve'),
     knox = require (constants.SERVER_COMMON + '/lib/s3Utils').client,
     sqsConnect = require(constants.SERVER_COMMON + '/lib/sqsConnect'),
+    http = require ('http'),
+    https = require ('https'),
     winston = require (constants.SERVER_COMMON + '/lib/winstonWrapper').winston
+
 
 winston.info("mikeymail daemon started")
 
