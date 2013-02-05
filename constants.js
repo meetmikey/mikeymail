@@ -1,5 +1,3 @@
-var conf = require('./conf')
-
 function define(name, value) {
   Object.defineProperty(exports, name, {
     value : value,
