@@ -40,21 +40,42 @@ sqsConnect.pollMailDownloadQueue(function (message, callback) {
       winston.log('error', 'Error: could not generate xoauth token', { err: err });
     }
     else {
-
-      //TODO: if token changes, save updated token to db
-      console.log("AUTH XOAUTH2 " + token);
-    
+   
       // trigger downloading
       var connection = imapConnect.createImapConnection (userInfo.email, token)
       imapConnect.openMailbox (connection, function (err) {
         winston.info ('connection opened for user: ' + userInfo.email)
+      
+        async.parallel([
+          function(asyncCb){ 
+            imapRetrieve.getMessagesWithAttachments (connection, 'Jan 1, 2012', userId, function (err) {
 
-        imapRetrieve.getMessagesWithAttachments (connection, 'Jan 1, 2012', userId, function (err) {
+              // TODO: delete message later
+              asyncCb (null, 'attachments')
 
-          // TODO: delete message later
-          callback (null)
+            })
+          },
+          function(asyncCb){
+            imapRetrieve.getAllMessagesForLinks (connection, 'Jan 1, 2012', userId, function (err) {
 
-        })
+              asyncCb(null, 'links')
+            })
+
+          }
+        ],
+        // optional callback
+        function(err, results){
+          // the results array will equal ['one','two'] even though
+          // the second function had a shorter timeout.
+          if (err) {
+
+          }
+          else {
+            callback (null)
+          }
+
+        });
+
 
       })
 
