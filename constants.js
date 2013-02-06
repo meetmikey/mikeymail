@@ -24,6 +24,6 @@ define('SERVER_COMMON', process.env.SERVER_COMMON)
 
 define('MAX_DOWNLOAD_JOBS', 1)
 
-define('OBJECTS_PER_MAIL_INSERT', 1000)
+define ('S3_RETRIES', 2)
 
 define('AWS_RAW_MSG_DIR', '/rawEmail')

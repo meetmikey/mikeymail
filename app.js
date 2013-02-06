@@ -115,52 +115,59 @@ sqsConnect.pollMailDownloadQueue(function (message, pollQueueCallback) {
               } 
               else {
                 var maxUid = box.uidNext - 1
-                var arguments = {'mailboxId' : box._id, 'userId' : userInfo._id, 'maxUid' : maxUid}
-                callback (null, arguments)
+                var argDict = {'mailboxId' : box._id, 'userId' : userInfo._id, 'maxUid' : maxUid}
+                callback (null, argDict)
               }             
             })
 
           }
 
 
-          function retrieveHeaders (arguments, callback) {
+          function retrieveHeaders (argDict, callback) {
+            
+            console.log (argDict)
 
             // get all headers from the first email to the uidNext when we created the mailbox (non-inclusive)
-            imapRetrieve.getHeaders(myConnection, arguments.userId, arguments.mailboxId, arguments.maxUid, function (err, uidRange) {
+            imapRetrieve.getHeaders(myConnection, argDict.userId, argDict.mailboxId, argDict.maxUid, function (err) {
 
               if (err) {
                 callback (err)
               }
               else {
-                callback (null, arguments)                
+                callback (null, argDict)
               }
             })
+            
+            //callback (null, arguments)
 
           }
 
-          function retrieveAttachments (arguments, callback) {
+          function retrieveAttachments (argDict, callback) {
  
-            /*imapRetrieve.getMessagesWithAttachments (connection, 'Jan 1, 2000', userId, function (err, uidsWithAttachment) {
+            console.log (argDict)
 
-              callback (null, arguments)
+            imapRetrieve.getMessagesWithAttachments (myConnection, argDict.userId, argDict.maxUid, 
+              function (err, uidsWithAttachment) {
 
-            })*/
-            callback (null, arguments)
+                console.log (uidsWithAttachment)
+                callback (null, argDict)
+
+              })
+ 
+          }
+
+          function retrieveEmailsNoAttachments (argDict, callback) {
+            callback (null, argDict)
 
           }
 
-          function retrieveEmailsNoAttachments (arguments, callback) {
-            callback (null, arguments)
+          function markStoppingPoint (argDict, callback) {
+            callback (null, argDict)
 
           }
 
-          function markStoppingPoint (arguments, callback) {
-            callback (null, arguments)
-
-          }
-
-          function closeMailbox (arguments, callback) {
-            callback (null, arguments)
+          function closeMailbox (argDict, callback) {
+            callback (null, argDict)
 
           }
 
