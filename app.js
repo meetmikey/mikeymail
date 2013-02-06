@@ -5,77 +5,211 @@ var constants = require ('./constants'),
     sqsConnect = require(constants.SERVER_COMMON + '/lib/sqsConnect'),
     http = require ('http'),
     https = require ('https'),
-    mongoose = require (constants.SERVER_COMMON + '/lib/mongooseConnect'),
+    mongoose = require (constants.SERVER_COMMON + '/lib/mongooseConnect').mongoose,
     conf = require (constants.SERVER_COMMON + '/conf'),
     winston = require (constants.SERVER_COMMON + '/lib/winstonWrapper').winston,
     async = require ('async'),
     xoauth2 = require("xoauth2"),
     xoauth2gen;
 
+var MailBox = mongoose.model ('MailBox')
+var MailModel = mongoose.model ('Mail')
 
 winston.info("mikeymail daemon started")
 
-sqsConnect.pollMailDownloadQueue(function (message, callback) {
+sqsConnect.pollMailDownloadQueue(function (message, pollQueueCallback) {
 
   console.log ('got poll queue message', message)
   var userInfo = JSON.parse (message)
-
   var userId = userInfo._id
-
-  console.log (userInfo)
-  console.log ('secret', conf.google.appSecret)
-  console.log ('appid', conf.google.appId)
 
   xoauth2gen = xoauth2.createXOAuth2Generator({
       user: userInfo.email,
       clientId: conf.google.appId,
       clientSecret: conf.google.appSecret,
-      accessToken : userInfo.accessToken,
+      //accessToken : userInfo.accessToken,
       refreshToken: userInfo.refreshToken
   });
 
   // SMTP/IMAP
   xoauth2gen.getToken(function(err, token){
     if(err){
-      winston.log('error', 'Error: could not generate xoauth token', { err: err });
+      winston.doError('error', 'Error: could not generate xoauth token', err);
     }
     else {
    
+      // for testing use flags
+      //var getAttachments = false
+      //var getAllMessages = false
+
       // trigger downloading
-      var connection = imapConnect.createImapConnection (userInfo.email, token)
-      imapConnect.openMailbox (connection, function (err) {
-        winston.info ('connection opened for user: ' + userInfo.email)
+      var myConnection = imapConnect.createImapConnection (userInfo.email, token)
       
-        async.parallel([
-          function(asyncCb){ 
-            imapRetrieve.getMessagesWithAttachments (connection, 'Jan 1, 2012', userId, function (err) {
+      imapConnect.openMailbox (myConnection, function (err, mailbox) {
 
-              // TODO: delete message later
-              asyncCb (null, 'attachments')
+        if (err) {
+          winston.doError ('Could not open mailbox', err)
+        }
+        else {
 
+          winston.info ('Connection opened for user: ' + userInfo.email)
+          winston.info ('Mailbox opened',  mailbox)
+          
+          /* sample mailbox response
+          { uidnext: 2915,
+            readOnly: true,
+            flags: [ 'Answered', 'Flagged', 'Draft', 'Deleted', 'Seen' ],
+            newKeywords: false,
+            uidvalidity: 5,
+            keywords: [ '' ],
+            permFlags: [],
+            name: '[Gmail]/All Mail',
+            messages: { total: 2906, new: 0 },
+            _newName: undefined }
+          */
+
+          /*
+          imapConnect.closeMailbox (connection, function (err) {
+            if (err) {
+              winston.doError ('Could not close mailbox', err)
+            }
+            else {
+              console.log ('mailbox closed for user ' + userInfo.email)
+            }
+          })
+          */
+
+          
+          // assumption - initial downloading
+          async.waterfall ([
+            createMailbox,
+            retrieveHeaders,
+            retrieveAttachments,
+            retrieveEmailsNoAttachments,
+            markStoppingPoint,
+            closeMailbox
+          ], function (err) {
+
+            if (err) {
+              winston.doError ('Could not finish initial downloading', err)
+            }
+            else {
+              pollQueueCallback (null)
+            }
+
+          });
+
+          // create mailbox object for user
+          function createMailbox (callback) {
+            var box = new MailBox ({
+              userId : userInfo._id,
+              uidNext: mailbox.uidnext,
+              uidValidity : mailbox.uidvalidity,
+              name: mailbox.name,
+              totalMessages : mailbox.messages.total
             })
-          },
-          function(asyncCb){
-            imapRetrieve.getAllMessagesForLinks (connection, 'Jan 1, 2012', userId, function (err) {
-
-              asyncCb(null, 'links')
+          
+            box.save (function (err) {
+              if (err) {
+                callback (err)
+              } 
+              else {
+                var maxUid = box.uidNext - 1
+                var arguments = {'mailboxId' : box._id, 'userId' : userInfo._id, 'maxUid' : maxUid}
+                callback (null, arguments)
+              }             
             })
 
           }
-        ],
-        // optional callback
-        function(err, results){
-          // the results array will equal ['one','two'] even though
-          // the second function had a shorter timeout.
-          if (err) {
+
+
+          function retrieveHeaders (arguments, callback) {
+
+            // get all headers from the first email to the uidNext when we created the mailbox (non-inclusive)
+            imapRetrieve.getHeaders(myConnection, arguments.userId, arguments.mailboxId, arguments.maxUid, function (err, uidRange) {
+
+              if (err) {
+                callback (err)
+              }
+              else {
+                callback (null, arguments)                
+              }
+            })
 
           }
-          else {
-            callback (null)
+
+          function retrieveAttachments (arguments, callback) {
+ 
+            /*imapRetrieve.getMessagesWithAttachments (connection, 'Jan 1, 2000', userId, function (err, uidsWithAttachment) {
+
+              callback (null, arguments)
+
+            })*/
+            callback (null, arguments)
+
           }
 
-        });
+          function retrieveEmailsNoAttachments (arguments, callback) {
+            callback (null, arguments)
 
+          }
+
+          function markStoppingPoint (arguments, callback) {
+            callback (null, arguments)
+
+          }
+
+          function closeMailbox (arguments, callback) {
+            callback (null, arguments)
+
+          }
+
+
+
+          /*
+
+          async.parallel([
+            function(asyncCb){ 
+              if (getAttachments) {
+                imapRetrieve.getMessagesWithAttachments (connection, 'Jan 1, 2012', userId, function (err) {
+
+                  // TODO: delete message later
+                  asyncCb (null, 'attachments')
+
+                })
+              }
+              else {
+                asyncCb (null, 'attachments')
+              }
+            },
+            function(asyncCb){
+              if (getAllMessages) {           
+                //imapRetrieve.getAllMessages (connection, 'Jan 1, 2012', userId, function (err) {
+                imapRetrieve.getHeaders (connection, 'Jan 1, 2013', userId, function (err) {
+                  asyncCb(null, 'links')
+                })
+              }
+              else {
+                asyncCb(null, 'links')
+              }
+
+            }
+          ],
+          // optional callback
+          function(err, results){
+            // the results array will equal ['one','two'] even though
+            // the second function had a shorter timeout.
+            if (err) {
+
+            }
+            else {
+              callback (null)
+            }
+
+          });
+          */
+
+        }
 
       })
 
