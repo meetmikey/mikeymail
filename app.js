@@ -38,10 +38,6 @@ sqsConnect.pollMailDownloadQueue(function (message, pollQueueCallback) {
     }
     else {
    
-      // for testing use flags
-      //var getAttachments = false
-      //var getAllMessages = false
-
       // trigger downloading
       var myConnection = imapConnect.createImapConnection (userInfo.email, token)
       
@@ -109,24 +105,29 @@ sqsConnect.pollMailDownloadQueue(function (message, pollQueueCallback) {
               totalMessages : mailbox.messages.total
             })
           
+            
             box.save (function (err) {
               if (err) {
                 callback (err)
               } 
               else {
                 var maxUid = box.uidNext - 1
-                var argDict = {'mailboxId' : box._id, 'userId' : userInfo._id, 'maxUid' : maxUid}
+                var argDict = {'mailboxId' : box._id, 'userId' : userInfo._id, 'maxUid' : maxUid, 'totalBandwith' : 0}
                 callback (null, argDict)
               }             
             })
+            
+            /*
+            var maxUid = box.uidNext - 1
+            var argDict = {'mailboxId' : box._id, 'userId' : userInfo._id, 'maxUid' : maxUid}
 
+            callback (null, argDict)
+            */
           }
 
 
           function retrieveHeaders (argDict, callback) {
             
-            console.log (argDict)
-
             // get all headers from the first email to the uidNext when we created the mailbox (non-inclusive)
             imapRetrieve.getHeaders(myConnection, argDict.userId, argDict.mailboxId, argDict.maxUid, function (err) {
 
@@ -138,18 +139,17 @@ sqsConnect.pollMailDownloadQueue(function (message, pollQueueCallback) {
               }
             })
             
-            //callback (null, arguments)
 
           }
 
           function retrieveAttachments (argDict, callback) {
  
-            console.log (argDict)
 
-            imapRetrieve.getMessagesWithAttachments (myConnection, argDict.userId, argDict.maxUid, 
-              function (err, uidsWithAttachment) {
+            imapRetrieve.getMessagesWithAttachments (myConnection, argDict.userId, argDict.maxUid, argDict.totalBandwith,
+              function (err, bandwithUsed) {
 
-                console.log (uidsWithAttachment)
+                argDict.totalBandwith += bandwithUsed
+                console.log (argDict)
                 callback (null, argDict)
 
               })
@@ -157,6 +157,18 @@ sqsConnect.pollMailDownloadQueue(function (message, pollQueueCallback) {
           }
 
           function retrieveEmailsNoAttachments (argDict, callback) {
+
+
+
+            // query database for messages without an s3Path
+            MailModel.find ({s3Path : {$exists : false}, userId : argDict.userId})
+              .select('uid _id')
+              .sort ('-uid')
+              .limit (100)
+              .exec (function (err, messages) {
+                console.log (messages)
+              })
+
             callback (null, argDict)
 
           }
@@ -167,8 +179,15 @@ sqsConnect.pollMailDownloadQueue(function (message, pollQueueCallback) {
           }
 
           function closeMailbox (argDict, callback) {
-            callback (null, argDict)
-
+            imapConnect.closeMailbox (myConnection, function (err) {
+              if (err) {
+                winston.doError ('Could not close mailbox', err)
+              }
+              else {
+                winston.info ('mailbox closed for user ' + userInfo.email)
+                callback (null)
+              }
+            })
           }
 
 
