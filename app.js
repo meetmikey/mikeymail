@@ -5,6 +5,7 @@ var constants = require ('./constants'),
     sqsConnect = require(constants.SERVER_COMMON + '/lib/sqsConnect'),
     http = require ('http'),
     https = require ('https'),
+    fs = require ('fs'),
     mongoose = require (constants.SERVER_COMMON + '/lib/mongooseConnect').mongoose,
     conf = require (constants.SERVER_COMMON + '/conf'),
     winston = require (constants.SERVER_COMMON + '/lib/winstonWrapper').winston,
@@ -64,22 +65,13 @@ sqsConnect.pollMailDownloadQueue(function (message, pollQueueCallback) {
             _newName: undefined }
           */
 
-          /*
-          imapConnect.closeMailbox (connection, function (err) {
-            if (err) {
-              winston.doError ('Could not close mailbox', err)
-            }
-            else {
-              console.log ('mailbox closed for user ' + userInfo.email)
-            }
-          })
-          */
 
           
           // assumption - initial downloading
           async.waterfall ([
             createMailbox,
             retrieveHeaders,
+            createTempDirectoryForEmails,
             retrieveAttachments,
             retrieveEmailsNoAttachments,
             markStoppingPoint,
@@ -97,6 +89,8 @@ sqsConnect.pollMailDownloadQueue(function (message, pollQueueCallback) {
 
           // create mailbox object for user
           function createMailbox (callback) {
+            winston.info ('createMailbox')
+
             var box = new MailBox ({
               userId : userInfo._id,
               uidNext: mailbox.uidnext,
@@ -117,17 +111,12 @@ sqsConnect.pollMailDownloadQueue(function (message, pollQueueCallback) {
               }             
             })
             
-            /*
-            var maxUid = box.uidNext - 1
-            var argDict = {'mailboxId' : box._id, 'userId' : userInfo._id, 'maxUid' : maxUid}
-
-            callback (null, argDict)
-            */
           }
 
 
           function retrieveHeaders (argDict, callback) {
-            
+            winston.info ('retrieveHeaders')
+
             // get all headers from the first email to the uidNext when we created the mailbox (non-inclusive)
             imapRetrieve.getHeaders(myConnection, argDict.userId, argDict.mailboxId, argDict.maxUid, function (err) {
 
@@ -138,42 +127,142 @@ sqsConnect.pollMailDownloadQueue(function (message, pollQueueCallback) {
                 callback (null, argDict)
               }
             })
-            
+
+          }
+
+          function createTempDirectoryForEmails (argDict, callback) {
+            winston.info ('createTempDirectoryForEmails')
+
+            var dir = constants.TEMP_FILES_DIR + '/' + argDict.userId
+
+            //check existence
+            fs.exists(dir, function (exists) {
+              if (exists) {
+                callback (null, argDict)
+              }
+              else {
+                fs.mkdir (dir, function (err) {
+
+                  if (err) {
+                    winston.error ("Error: could not make directory", constants.TEMP_FILES_DIR + '/' + userId)
+                    callback (err)
+                  }
+                  else {
+                    callback (null, argDict)
+                  }
+
+                })
+              }
+
+            })
 
           }
 
           function retrieveAttachments (argDict, callback) {
- 
+            winston.info ('retrieveAttachments')
 
+            // get the messageIds with attachments
+            imapRetrieve.getIdsOfMessagesWithAttachments (myConnection, argDict.maxUid, function (err, results) {
+              if (err) {
+                callback (err)
+              }
+              else {
+
+                var resultsAsInt = results.map (function (elem) { return parseInt(elem)})
+
+                console.log (resultsAsInt)
+                console.log ({user : argDict.userId}) 
+                
+                MailModel.update ({userId : argDict.userId, 'uid' : {$in : resultsAsInt}}, 
+                  {$set : {hasAttachment : true}}, 
+                  {multi : true})
+                  .exec(function (err, numAffected) {
+                    if (err) {
+                      callback (err)
+                    }
+                    else if (numAffected == 0) {
+                      winston.error ('no records affected')
+                      callback (null, argDict)
+                    }
+                    else {
+                      winston.info (numAffected)
+                      callback (null, argDict)
+                    }
+                  })
+              }
+            })
+
+            //TODO: replace with bandwith limited attachment get like below
             imapRetrieve.getMessagesWithAttachments (myConnection, argDict.userId, argDict.maxUid, argDict.totalBandwith,
               function (err, bandwithUsed) {
-
                 argDict.totalBandwith += bandwithUsed
-                console.log (argDict)
                 callback (null, argDict)
-
               })
- 
+            
           }
 
           function retrieveEmailsNoAttachments (argDict, callback) {
+            winston.info ('retrieveEmailsNoAttachments')
 
+            var totalBandwith = argDict.totalBandwith
+            console.log (totalBandwith)
+            var skip = 0
 
+            if (totalBandwith < constants.MAX_BANDWITH_TOTAL) {          
+              retrieveBatch (totalBandwith, skip)
+            }
+            else {
+              winston.info('retrieveEmailsNoAttachments: Not retrieving emails anymore \
+                because bandwith limit exceeded', totalBandwith)
+              callback (null, argDict)
+            }
 
-            // query database for messages without an s3Path
-            MailModel.find ({s3Path : {$exists : false}, userId : argDict.userId})
-              .select('uid _id')
-              .sort ('-uid')
-              .limit (100)
-              .exec (function (err, messages) {
-                console.log (messages)
-              })
+            function retrieveBatch (totalBandwith, skip) {
 
-            callback (null, argDict)
+              // query database for messages without an s3Path
+              MailModel.find ({s3Path : {$exists : false}, userId : argDict.userId})
+                .select('uid')
+                .sort ('-uid')
+                .skip(skip)
+                .limit (constants.EMAIL_FETCH_BATCH_SIZE)
+                .exec (function (err, messages) {
+                  if (err) {
+                    callback (err)
+                  }
+                  else {
+                    imapRetrieve.getMessagesByUid (myConnection, argDict.userId, 
+                      messages, function (err, bandwithUsed) {
+                      
+                      if (err) {
+                        //TODO: ... don't fail whole chain???
+                        callback (err)
+                      }
+                      else {
+                        totalBandwith += bandwithUsed
+                        console.log ('totalBandwith', totalBandwith)
+                        if (totalBandwith < constants.MAX_BANDWITH_TOTAL 
+                          && messages.length == constants.EMAIL_FETCH_BATCH_SIZE) {
+                          
+                          retrieveBatch (totalBandwith, skip + constants.EMAIL_FETCH_BATCH_SIZE)
+                        }
+                        else {
+                          winston.info('retrieveEmailsNoAttachments: Not retrieving emails anymore \
+                            because bandwith limit exceeded', totalBandwith)
+                          callback (null, argDict)
+                        }
+                      
+                      }
+
+                    })
+                  }
+                })
+
+            }
 
           }
 
           function markStoppingPoint (argDict, callback) {
+
             callback (null, argDict)
 
           }
@@ -189,51 +278,6 @@ sqsConnect.pollMailDownloadQueue(function (message, pollQueueCallback) {
               }
             })
           }
-
-
-
-          /*
-
-          async.parallel([
-            function(asyncCb){ 
-              if (getAttachments) {
-                imapRetrieve.getMessagesWithAttachments (connection, 'Jan 1, 2012', userId, function (err) {
-
-                  // TODO: delete message later
-                  asyncCb (null, 'attachments')
-
-                })
-              }
-              else {
-                asyncCb (null, 'attachments')
-              }
-            },
-            function(asyncCb){
-              if (getAllMessages) {           
-                //imapRetrieve.getAllMessages (connection, 'Jan 1, 2012', userId, function (err) {
-                imapRetrieve.getHeaders (connection, 'Jan 1, 2013', userId, function (err) {
-                  asyncCb(null, 'links')
-                })
-              }
-              else {
-                asyncCb(null, 'links')
-              }
-
-            }
-          ],
-          // optional callback
-          function(err, results){
-            // the results array will equal ['one','two'] even though
-            // the second function had a shorter timeout.
-            if (err) {
-
-            }
-            else {
-              callback (null)
-            }
-
-          });
-          */
 
         }
 
