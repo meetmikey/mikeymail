@@ -36,6 +36,6 @@ define ('MAX_BANDWITH_ATTACHMENT', gigabyte * 3/4)
 // extra .25 gb for other emails
 define ('MAX_BANDWITH_TOTAL', gigabyte)
 
-define ('EMAIL_FETCH_BATCH_SIZE', 3)
+define ('EMAIL_FETCH_BATCH_SIZE', 100)
 
 define('AWS_RAW_MSG_DIR', '/rawEmail')
