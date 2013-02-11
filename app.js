@@ -167,8 +167,9 @@ function scrapeMailbox (onboardingStateId, userInfo, pollQueueCallback, lastComp
                   callback (err)
                 }
                 else if (!foundMailbox) {
-                  //TODO
                   winston.error('Could not find mailbox but onboarding state suggests we have it')
+                  // create a new mailbox since it's unclear what's going on
+                  createNewMailbox()
                 }
                 else {
 
@@ -186,6 +187,12 @@ function scrapeMailbox (onboardingStateId, userInfo, pollQueueCallback, lastComp
               })
             }
             else {
+              createNewMailbox()
+            }
+
+
+
+            function createNewMailbox () {
 
               // new onboarding case
               var box = new MailBox ({
@@ -211,7 +218,7 @@ function scrapeMailbox (onboardingStateId, userInfo, pollQueueCallback, lastComp
                 }             
               })
             }
-            
+
           }
 
 

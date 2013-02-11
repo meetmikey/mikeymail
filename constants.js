@@ -22,20 +22,26 @@ define('INDEX_NAME', 'document_index')
 
 define('SERVER_COMMON', process.env.SERVER_COMMON)
 
-define('MAX_DOWNLOAD_JOBS', 5)
+define('MAX_DOWNLOAD_JOBS', 1)
 
-define ('S3_RETRIES', 2)
+define ('S3_RETRIES', 4)
 
 var gigabyte = 1073741824
 
-//var gigabyte = 1193869 + 1
+// .8 gb
+define ('MAX_BANDWITH_ATTACHMENT', gigabyte * 4/5)
 
-// .75 gb
-define ('MAX_BANDWITH_ATTACHMENT', gigabyte * 3/4)
-
-// extra .25 gb for other emails
+// extra .2 gb for other emails
 define ('MAX_BANDWITH_TOTAL', gigabyte)
 
 define ('EMAIL_FETCH_BATCH_SIZE', 100)
 
 define('AWS_RAW_MSG_DIR', '/rawEmail')
+
+
+define('MARKETING_TEXT', '("opt-out" OR unsubscribe OR "viewing the newsletter" OR "privacy policy" OR enews OR "edit your preferences" OR "email notifications" OR "update profile" OR smartunsubscribe OR secureunsubscribe OR yahoogroups OR "manage your account" OR "group-digests")')
+
+define('MARKETING_FROM', 'from:(noreply OR no-reply OR notification OR amazon.com OR linkedin.com OR facebookmail.com OR auto-confirm OR pinterest OR support OR digest OR contact@)')
+
+
+// include inline images only from my contacts
