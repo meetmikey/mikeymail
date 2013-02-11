@@ -112,7 +112,7 @@ function scrapeMailbox (onboardingStateId, userInfo, pollQueueCallback, lastComp
             var opLen = operations.length
 
             // this user has already been onboarded to completion, no reason to continue
-            if (lastCompleted == operations[opLen-1]) {
+            if (lastCompleted == operations[opLen-1].name) {
               return pollQueueCallback ()
             }
             else {
@@ -180,10 +180,7 @@ function scrapeMailbox (onboardingStateId, userInfo, pollQueueCallback, lastComp
                   argDict.maxUid = foundMailbox.uidNext -1
                   argDict.mailboxId = foundMailbox._id
 
-                  updateState (onboardingStateId, functionName, function () {
-                    setArgDictRecoveryState (argDict, functionName)
-                    callback (null, argDict)
-                  })
+                  updateStateAndCallback (onboardingStateId, functionName, argDict, callback)
 
                 }
               })
@@ -219,11 +216,11 @@ function scrapeMailbox (onboardingStateId, userInfo, pollQueueCallback, lastComp
 
 
           function retrieveHeaders (argDict, callback) {
-            var functionName = arguments.callee.name            
+            var functionName = arguments.callee.name
             winston.info (functionName)
 
             // recovery case, we must have the headers in the DB already
-            if (argDict.recoveryMode && argDict.recoveryModeStartPoint != 'retrieveHeaders') {
+            if (argDict.recoveryMode && argDict.recoveryModeStartPoint != functionName) {
               return callback (null, argDict)
             }
 
@@ -234,12 +231,7 @@ function scrapeMailbox (onboardingStateId, userInfo, pollQueueCallback, lastComp
                 callback (err)
               }
               else {
-
-                updateState (onboardingStateId, functionName, function () {
-                  setArgDictRecoveryState (argDict, functionName)
-                  callback (null, argDict)
-                })
-
+                updateStateAndCallback (onboardingStateId, functionName, argDict, callback)
               }
             })
 
@@ -250,17 +242,12 @@ function scrapeMailbox (onboardingStateId, userInfo, pollQueueCallback, lastComp
             winston.info (functionName)
 
             // always create temp directory even if starting point doesn't match since this is local to fs
-
             var dir = constants.TEMP_FILES_DIR + '/' + argDict.userId
 
             //check existence
             fs.exists(dir, function (exists) {
               if (exists) {
-
-                updateState (onboardingStateId, functionName, function () {
-                  callback (null, argDict)
-                })
-
+                updateStateAndCallback (onboardingStateId, functionName, argDict, callback)
               }
               else {
                 fs.mkdir (dir, function (err) {
@@ -270,12 +257,7 @@ function scrapeMailbox (onboardingStateId, userInfo, pollQueueCallback, lastComp
                     callback (err)
                   }
                   else {
-
-                    updateState (onboardingStateId, functionName, function () {
-                      setArgDictRecoveryState (argDict, functionName)
-                      callback (null, argDict)
-                    })
-
+                    updateStateAndCallback (onboardingStateId, functionName, argDict, callback)
                   }
 
                 })
@@ -321,10 +303,7 @@ function scrapeMailbox (onboardingStateId, userInfo, pollQueueCallback, lastComp
                           winston.doError ('Error recursively getting attachments', err)                          
                         }
 
-                        updateState (onboardingStateId, functionName, function () {
-                          setArgDictRecoveryState (argDict, functionName)
-                          callback (null, argDict)
-                        })
+                        updateStateAndCallback (onboardingStateId, functionName, argDict, callback)
 
                       })
                     }
@@ -356,11 +335,7 @@ function scrapeMailbox (onboardingStateId, userInfo, pollQueueCallback, lastComp
                   winston.doError ('Error recursively getting attachments', err)                          
                 }
 
-                updateState (onboardingStateId, functionName, function () {
-                  setArgDictRecoveryState (argDict, functionName)
-                  callback (null, argDict)
-                })
-
+                updateStateAndCallback (onboardingStateId, functionName, argDict, callback)
 
               })
 
@@ -369,11 +344,7 @@ function scrapeMailbox (onboardingStateId, userInfo, pollQueueCallback, lastComp
               winston.info('retrieveEmailsNoAttachments: Not retrieving emails anymore \
                 because bandwith limit exceeded', totalBandwith)
 
-              updateState (onboardingStateId, functionName, function () {
-                setArgDictRecoveryState (argDict, functionName)
-                callback (null, argDict)
-              })
-
+              updateStateAndCallback (onboardingStateId, functionName, argDict, callback)
             }
 
 
@@ -383,10 +354,7 @@ function scrapeMailbox (onboardingStateId, userInfo, pollQueueCallback, lastComp
             var functionName = arguments.callee.name            
             winston.info (functionName, argDict)
 
-            updateState (onboardingStateId, functionName, function () {
-              setArgDictRecoveryState (argDict, functionName)
-              callback (null, argDict)
-            })
+            updateStateAndCallback (onboardingStateId, functionName, argDict, callback)
 
           }
 
@@ -401,17 +369,18 @@ function scrapeMailbox (onboardingStateId, userInfo, pollQueueCallback, lastComp
 }
 
 
+function updateStateAndCallback (onboardingStateId, functionName, argDict, callback) {
+  updateState (onboardingStateId, functionName, function () {
+    setArgDictRecoveryState (argDict, functionName)
+    callback (null, argDict)
+  })
+}
+
 // resolve the recovery mode flag once we finish the function that the recovery mode started at
 function setArgDictRecoveryState (argDict, functionName) {
-  console.log (argDict)
-  console.log (functionName)
-  console.log (argDict.recoveryModeStartPoint == functionName)
-
   if (argDict.recoveryMode && argDict.recoveryModeStartPoint == functionName) {
-    argDict.recoveryMode == false
+    argDict.recoveryMode = false
   }
-
-  console.log (argDict)
 }
 
 
@@ -487,14 +456,14 @@ function retrieveBatchRecurse (myConnection, query, argDict, maxUid, isAttachmen
 
             console.log ('totalBandwith', argDict.totalBandwith)
             if (msgLength < constants.EMAIL_FETCH_BATCH_SIZE || newMaxUid < 1) {
-              winston.info('retrieveBatchRecurse: Not retrieving emails anymore: no emails left to process with isAttachment: ', isAttachment)
+              winston.info('retrieveBatchRecurse: Not retrieving emails anymore: no emails left to process with isAttachment: ' + isAttachment)
               callback ()
             }
             else if (argDict.totalBandwith < constants.MAX_BANDWITH_TOTAL) {
 
               // sub-conditions for isAttachment
               if (isAttachment && argDict.attachmentBandwith > constants.MAX_BANDWITH_ATTACHMENT) {
-                winston.info('retrieveBatchRecurse: Not retrieving emails anymore: attachment bandwith used up: ', argDict.attachmentBandwith)
+                winston.info('retrieveBatchRecurse: Not retrieving emails anymore: attachment bandwith used up: ' + argDict.attachmentBandwith)
                 callback (null)
               }
               else {
