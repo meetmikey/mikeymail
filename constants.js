@@ -39,9 +39,8 @@ define ('EMAIL_FETCH_BATCH_SIZE', 100)
 define('AWS_RAW_MSG_DIR', '/rawEmail')
 
 
-define('MARKETING_TEXT', '("opt-out" OR unsubscribe OR "viewing the newsletter" OR "privacy policy" OR enews OR "edit your preferences" OR "email notifications" OR "update profile" OR smartunsubscribe OR secureunsubscribe OR yahoogroups OR "manage your account" OR "group-digests")')
+define('MARKETING_TEXT', '("opt-out" OR unsubscribe OR "viewing the newsletter" OR "privacy policy" OR enews OR "edit your preferences" OR "email notifications" OR "update profile" OR smartunsubscribe OR secureunsubscribe OR yahoogroups OR "manage your account" OR "group-digests" OR zenpayroll OR facebook OR asana)')
 
-define('MARKETING_FROM', 'from:(noreply OR no-reply OR notification OR amazon.com OR linkedin.com OR facebookmail.com OR auto-confirm OR pinterest OR support OR digest OR contact@)')
-
+define('MARKETING_FROM', 'from:(noreply OR no-reply OR amazon.com OR linkedin.com OR facebookmail.com OR auto-confirm OR pinterest OR support OR service OR digest OR contact@ OR info@ OR twitter OR member OR confirmation OR @paypal.com OR edelivery@ OR notifications@)')
 
 // include inline images only from my contacts
