@@ -26,6 +26,13 @@ define('MAX_DOWNLOAD_JOBS', 1)
 
 define ('S3_RETRIES', 4)
 
+if (process.env.USE_MONGOHQ == 'true') {
+  define ('USE_MONGO_HQ', true)
+}
+else {
+  define ('USE_MONGO_HQ', false)
+}
+
 var gigabyte = 1073741824
 
 // .8 gb
