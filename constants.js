@@ -22,6 +22,8 @@ define('INDEX_NAME', 'document_index')
 
 define('SERVER_COMMON', process.env.SERVER_COMMON)
 
+define('MAX_UPDATE_JOBS', 100)
+
 define('MAX_DOWNLOAD_JOBS', 1)
 
 define ('S3_RETRIES', 4)
@@ -45,6 +47,8 @@ define ('EMAIL_FETCH_BATCH_SIZE', 100)
 
 define('AWS_RAW_MSG_DIR', '/rawEmail')
 
+// 10 mins
+define('ACCESS_TOKEN_UPDATE_TIME_BUFFER', 600000)
 
 define('MARKETING_TEXT', '("opt-out" OR unsubscribe OR "viewing the newsletter" OR "privacy policy" OR enews OR "edit your preferences" OR "email notifications" OR "update profile" OR smartunsubscribe OR secureunsubscribe OR yahoogroups OR "manage your account" OR "group-digests" OR zenpayroll OR facebook OR asana)')
 

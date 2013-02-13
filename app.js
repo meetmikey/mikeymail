@@ -21,9 +21,10 @@ var mode = 'initial'
 // get the command line arguments - this will determine whether we 
 // run in initial indexing mode or continuous update mode
 process.argv.forEach(function (val, index, array) {
-  var modeIndex = val.indexOf('mode=')
+  var splitString = 'mode='
+  var modeIndex = val.indexOf(splitString)
   if (modeIndex > -1) {
-    mode = val.substring(5, val.length)
+    mode = val.substring(splitString.length, val.length)
   }
 });
 
