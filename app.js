@@ -1,19 +1,7 @@
 var constants = require ('./constants'),
-    imapConnect = require ('./lib/imapConnect'),
-    imapRetrieve = require ('./lib/imapRetrieve'),
-    knox = require (constants.SERVER_COMMON + '/lib/s3Utils').client,
-    sqsConnect = require(constants.SERVER_COMMON + '/lib/sqsConnect'),
-    http = require ('http'),
-    https = require ('https'),
-    fs = require ('fs'),
-    mongoose = require (constants.SERVER_COMMON + '/lib/mongooseConnect').mongoose,
-    conf = require (constants.SERVER_COMMON + '/conf'),
     winston = require (constants.SERVER_COMMON + '/lib/winstonWrapper').winston,
-    async = require ('async'),
-    xoauth2 = require("xoauth2"),
     mailDownloadDaemon = require ('./lib/mailDownloadDaemon'),
-    mailUpdateDaemon = require ('./lib/mailUpdateDaemon'),
-    xoauth2gen;
+    mailUpdateDaemon = require ('./lib/mailUpdateDaemon');
 
 // default
 var mode = 'initial'
@@ -37,5 +25,3 @@ if (mode == 'initial') {
 else if (mode == 'continuous') {
   mailUpdateDaemon.start()
 }
-
-
