@@ -10,8 +10,9 @@ var constants = require ('../constants'),
     async = require ('async'),
     xoauth2 = require("xoauth2"),
     daemonUtils = require ('../lib/daemonUtils');
+//ObjectId("5119c7b60746d47552000005")
 
-    var userInfo = {email : 'sagar@magicnotebook.com', _id : '5113108d9f2459d70c000004'}
+    var userInfo = {email : 'sagar@magicnotebook.com', _id : '5119c7b60746d47552000005'}
 
     var xoauth2gen = xoauth2.createXOAuth2Generator({
         user: userInfo.email,
@@ -51,7 +52,7 @@ var constants = require ('../constants'),
 
           var operations = [
             startAsync,
-            daemonUtils.retrieveHeaders,
+           // daemonUtils.retrieveHeaders,
             daemonUtils.mapReduceContacts,
             daemonUtils.mapReduceReceiveCounts
           ]
@@ -62,6 +63,7 @@ var constants = require ('../constants'),
             'userId' : userInfo._id,
             'userEmail' : userInfo.email,
             'isOnboarding' : false,
+            'minTimestamp' : Date.now(),
             'myConnection' : myConnection,
             'attachmentBandwith' : 0,
             'otherBandwith' : 0,
