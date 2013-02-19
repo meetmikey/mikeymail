@@ -16,7 +16,7 @@ process.argv.forEach(function (val, index, array) {
   }
 });
 
-winston.info("mikeymail daemon started in mode:" + mode)
+winston.doInfo("mikeymail daemon started in mode:" + mode)
 
 
 if (mode == 'initial') {
