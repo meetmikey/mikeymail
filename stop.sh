@@ -1,3 +1,3 @@
 #!/bin/sh
 
-forever stop app.js
+forever stop mikeymail.js
