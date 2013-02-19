@@ -3,6 +3,8 @@ var constants = require ('./constants'),
     mailDownloadDaemon = require ('./lib/mailDownloadDaemon'),
     mailUpdateDaemon = require ('./lib/mailUpdateDaemon');
 
+winston.logToFiles('mikeymail');
+
 // default
 var mode = 'initial'
 
@@ -16,7 +18,7 @@ process.argv.forEach(function (val, index, array) {
   }
 });
 
-winston.info("mikeymail daemon started in mode:" + mode)
+winston.doInfo("mikeymail daemon started in mode:" + mode)
 
 
 if (mode == 'initial') {
