@@ -1,6 +1,7 @@
 var constants = require ('./constants'),
     winston = require (constants.SERVER_COMMON + '/lib/winstonWrapper').winston,
     mailDownloadDaemon = require ('./lib/mailDownloadDaemon'),
+    mailListenDaemon = require ('./lib/mailListenDaemon'),
     mailUpdateDaemon = require ('./lib/mailUpdateDaemon');
 
 // default
@@ -24,4 +25,7 @@ if (mode == 'initial') {
 }
 else if (mode == 'continuous') {
   mailUpdateDaemon.start()
+}
+else if (mode == 'listen') {
+  mailListenDaemon.start()
 }

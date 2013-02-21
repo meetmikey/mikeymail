@@ -26,6 +26,8 @@ define('MAX_UPDATE_JOBS', 100)
 
 define('MAX_DOWNLOAD_JOBS', 1)
 
+define('MONGO_POLL_INTERVAL', 60*3000)
+
 define ('S3_RETRIES', 4)
 
 if (process.env.USE_MONGOHQ == 'true') {
