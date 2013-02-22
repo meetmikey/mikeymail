@@ -5,7 +5,7 @@ var constants = require ('./constants'),
     mailUpdateDaemon = require ('./lib/mailUpdateDaemon');
 
 // default
-var mode = 'initial'
+var modes = []
 
 // get the command line arguments - this will determine whether we 
 // run in initial indexing mode or continuous update mode
@@ -13,19 +13,22 @@ process.argv.forEach(function (val, index, array) {
   var splitString = 'mode='
   var modeIndex = val.indexOf(splitString)
   if (modeIndex > -1) {
-    mode = val.substring(splitString.length, val.length)
+    modes.push(val.substring(splitString.length, val.length))
   }
 });
 
-winston.doInfo("mikeymail daemon started in mode:" + mode)
+if (modes.length == 0) {
+  modes = ['initial']
+}
 
+winston.doInfo("mikeymail daemon started in modes: " + modes)
 
-if (mode == 'initial') {
+if (modes.indexOf('initial') != -1){
   mailDownloadDaemon.start()
 }
-else if (mode == 'continuous') {
+else if (modes.indexOf('continuous') != -1) {
   mailUpdateDaemon.start()
 }
-else if (mode == 'listen') {
+else if (modes.indexOf('listen') != -1) {
   mailListenDaemon.start()
 }
