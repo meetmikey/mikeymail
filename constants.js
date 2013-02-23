@@ -37,6 +37,8 @@ else {
   define ('USE_MONGO_HQ', false)
 }
 
+define ('LOCALHOST_QUEUE_TEST', false)
+
 var gigabyte = 1073741824/4
 
 // .8 gb

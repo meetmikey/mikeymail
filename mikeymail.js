@@ -26,9 +26,11 @@ winston.doInfo("mikeymail daemon started in modes: " + modes)
 if (modes.indexOf('initial') != -1){
   mailDownloadDaemon.start()
 }
-else if (modes.indexOf('continuous') != -1) {
+
+if (modes.indexOf('continuous') != -1) {
   mailUpdateDaemon.start()
 }
-else if (modes.indexOf('listen') != -1) {
+
+if (modes.indexOf('listen') != -1) {
   mailListenDaemon.start()
 }
