@@ -26,7 +26,9 @@ define('MAX_UPDATE_JOBS', 100)
 
 define('MAX_DOWNLOAD_JOBS', 1)
 
-define('MONGO_POLL_INTERVAL', 60*3000)
+define('MONGO_POLL_INTERVAL', 60*1000*3) // 3 minutes
+
+define('LISTENING_TIMESTAMP_INTERVAL', 60*1000*1)
 
 define ('S3_RETRIES', 4)
 
@@ -37,7 +39,7 @@ else {
   define ('USE_MONGO_HQ', false)
 }
 
-define ('LOCALHOST_QUEUE_TEST', false)
+define ('LOCALHOST_QUEUE_TEST', true)
 
 var gigabyte = 1073741824/4
 
