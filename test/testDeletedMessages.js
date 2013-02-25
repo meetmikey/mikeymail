@@ -10,16 +10,15 @@ var constants = require ('../constants'),
     async = require ('async'),
     xoauth2 = require("xoauth2"),
     daemonUtils = require ('../lib/daemonUtils');
-//ObjectId("5119c7b60746d47552000005")
 
-    var userInfo = {email : 'sagar@magicnotebook.com', _id : '5119c7b60746d47552000005'}
+    var userInfo = {"__v":0,"_id":"51286e73c99dfd9f11000004","accessToken":"ya29.AHES6ZR1o0jSdi-0y2GcpYFXOaW4J71ES5UA3hI2BN_qk4RJ-rkstEY","displayName":"Sagar Mehta","email":"sagar@mikeyteam.com","expiresAt":"2013-02-25T01:39:50.082Z","firstName":"Sagar","googleID":"115882407960585095714","hostedDomain":"mikeyteam.com","lastName":"Mehta","locale":"en","refreshToken":"1/FnY2N0xlYd_1ca0p2ND5YrSCqWYk30lOBk0pltLulrA","timestamp":"2013-02-23T07:23:31.802Z","gmailScrapeRequested":true}
 
     var xoauth2gen = xoauth2.createXOAuth2Generator({
         user: userInfo.email,
         clientId: conf.google.appId,
         clientSecret: conf.google.appSecret,
         //accessToken : userInfo.accessToken,
-        refreshToken: '1/foOYDyaQOkcgALX5KIMidX3REOScB0lr-yB-F5UzRdM'
+        refreshToken: userInfo.refreshToken
     });
 
     var minUid = process.argv[2]
@@ -52,9 +51,7 @@ var constants = require ('../constants'),
 
           var operations = [
             startAsync,
-           // daemonUtils.retrieveHeaders,
-            daemonUtils.mapReduceContacts,
-            daemonUtils.mapReduceReceiveCounts
+            daemonUtils.setDeletedMessages
           ]
 
 
@@ -63,15 +60,12 @@ var constants = require ('../constants'),
             'userId' : userInfo._id,
             'userEmail' : userInfo.email,
             'isOnboarding' : false,
-            'minTimestamp' : Date.now(),
             'myConnection' : myConnection,
             'attachmentBandwith' : 0,
             'otherBandwith' : 0,
             'totalBandwith' : 0,
             'mailbox' : mailbox
           }
-
-
 
           async.waterfall (operations, function (err) {
 
