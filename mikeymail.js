@@ -2,6 +2,7 @@ var constants = require ('./constants'),
     winston = require (constants.SERVER_COMMON + '/lib/winstonWrapper').winston,
     mailDownloadDaemon = require ('./lib/mailDownloadDaemon'),
     mailListenDaemon = require ('./lib/mailListenDaemon'),
+    mailResumeDownloadDaemon = require ('./lib/mailResumeDownloadDaemon'),
     mailUpdateDaemon = require ('./lib/mailUpdateDaemon');
 
 // default
@@ -27,8 +28,12 @@ if (modes.indexOf('initial') != -1){
   mailDownloadDaemon.start();
 }
 
-if (modes.indexOf('continuous') != -1) {
+if (modes.indexOf('update') != -1) {
   mailUpdateDaemon.start();
+}
+
+if (modes.indexOf('resume') != -1) {
+  mailResumeDownloadDaemon.start();
 }
 
 if (modes.indexOf('listen') != -1) {
