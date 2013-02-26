@@ -26,18 +26,15 @@ define('MAX_UPDATE_JOBS', 100)
 
 define('MAX_DOWNLOAD_JOBS', 1)
 
-define('MONGO_POLL_INTERVAL', 60*1000*3) // 3 minutes
+define('MONGO_ACTIVE_CONNECTIONS_POLL_INTERVAL', 60*1000*3) // 3 minutes
+
+define('MONGO_OFFLINE_UPDATE_POLL_INTERVAL', 60*1000*10) // 10 minutes
+
+define('OFFLINE_UPDATE_INTERVAL', 60*1000*20) // 20 minutes
 
 define('LISTENING_TIMESTAMP_INTERVAL', 60*1000*1)
 
 define ('S3_RETRIES', 4)
-
-if (process.env.USE_MONGOHQ == 'true') {
-  define ('USE_MONGO_HQ', true)
-}
-else {
-  define ('USE_MONGO_HQ', false)
-}
 
 define ('LOCALHOST_QUEUE_TEST', true)
 
