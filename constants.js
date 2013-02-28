@@ -46,7 +46,7 @@ define ('S3_RETRIES', 4);
 
 define ('DONT_QUEUE_LOCALHOST', false);
 
-var gigabyte = 1073741824/400;
+var gigabyte = 1073741824;
 
 // .8 gb
 define ('MAX_BANDWITH_ATTACHMENT', gigabyte * 4/5);
