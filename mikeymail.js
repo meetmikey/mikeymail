@@ -18,6 +18,10 @@ process.argv.forEach(function (val, index, array) {
   }
 });
 
+process.on('uncaughtException', function (err) {
+  winston.doError('uncaughtException:', {err : err});
+  process.exit(1)});
+
 if (modes.length == 0) {
   modes = ['initial'];
 }
