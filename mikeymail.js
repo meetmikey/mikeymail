@@ -24,17 +24,17 @@ process.on('uncaughtException', function (err) {
   process.exit(1)});
 
 if (modes.length == 0) {
-  modes = ['initial'];
+  modes = ['download'];
 }
 
 winston.doInfo("mikeymail daemon started in modes: " + modes);
 
-if (modes.indexOf('initial') != -1){
+if (modes.indexOf('download') != -1){
   mailDownloadDaemon.start();
 }
 
 if (modes.indexOf('update') != -1) {
-  mailUpdateDaemon.start();
+  //mailUpdateDaemon.start();
 }
 
 if (modes.indexOf('resume') != -1) {
