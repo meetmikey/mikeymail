@@ -24,8 +24,6 @@ define('SERVER_COMMON', process.env.SERVER_COMMON);
 
 define('MAX_UPDATE_JOBS', 100);
 
-define('MAX_DOWNLOAD_JOBS', 1);
-
 define('MAX_RESUME_DOWNLOAD_JOBS', 10);
 
 define('MONGO_ACTIVE_CONNECTIONS_POLL_INTERVAL', 60*1000*3); // 3 minutes
