@@ -24,7 +24,7 @@ define('SERVER_COMMON', process.env.SERVER_COMMON);
 
 define('MAX_UPDATE_JOBS', 100);
 
-define('MAX_DOWNLOAD_JOBS', 10);
+define('MAX_DOWNLOAD_JOBS', 1);
 
 define('MAX_RESUME_DOWNLOAD_JOBS', 10);
 
@@ -45,6 +45,8 @@ define('RESUME_DOWNLOAD_AFTER', 24*60*60*1000) // 24 hours
 define ('S3_RETRIES', 4);
 
 define ('DONT_QUEUE_LOCALHOST', false);
+
+define('HEADER_BATCH_SIZE', 10000)
 
 var gigabyte = 1073741824;
 

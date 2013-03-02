@@ -13,7 +13,7 @@ if (process.env.NODE_ENV == 'localhost' || process.env.NODE_ENV == 'development'
   var hd = new memwatch.HeapDiff();
 
   memwatch.on('leak', function(info) {
-    winston.doInfo ('LEAK REPORT', {info : info});
+    winston.doError ('LEAK REPORT', {info : info});
   });
 
   memwatch.on('stats', function(stats) { 
