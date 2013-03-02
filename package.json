@@ -9,7 +9,8 @@
     "contextio" : "0.3.0",
     "imap" : "0.7.7",
     "async" : ">=0.2.1",
-    "xoauth2" : ">=0.1.5"
+    "xoauth2" : ">=0.1.5",
+    "memwatch" : ">=0.2.0"
   },
   "scripts": {
     "start": "app.js"

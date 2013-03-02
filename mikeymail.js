@@ -1,5 +1,6 @@
 var constants = require ('./constants'),
     winston = require (constants.SERVER_COMMON + '/lib/winstonWrapper').winston,
+    memwatch = require('memwatch'),
     mailDownloadDaemon = require ('./lib/mailDownloadDaemon'),
     mailListenDaemon = require ('./lib/mailListenDaemon'),
     mailResumeDownloadDaemon = require ('./lib/mailResumeDownloadDaemon'),
@@ -7,6 +8,23 @@ var constants = require ('./constants'),
 
 // default
 var modes = [];
+
+if (process.env.NODE_ENV == 'localhost' || process.env.NODE_ENV == 'development') {
+  var hd = new memwatch.HeapDiff();
+
+  memwatch.on('leak', function(info) {
+    winston.doInfo ('LEAK REPORT', {info : info});
+  });
+
+  memwatch.on('stats', function(stats) { 
+    winston.doInfo ('STATS REPORT', {stats : stats});
+    var diff = hd.end();
+
+    winston.doInfo ('HEAP DIFF', {diff :diff});
+    hd = new memwatch.HeapDiff();
+  });
+
+}
 
 // get the command line arguments - this will determine whether we 
 // run in initial indexing mode or continuous update mode
