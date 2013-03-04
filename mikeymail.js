@@ -37,9 +37,9 @@ process.argv.forEach(function (val, index, array) {
 });
 
 process.on('uncaughtException', function (err) {
-  console.error (err);
-  winston.doError('uncaughtException:', {err : err});
-  process.exit(1)});
+  winston.doError('uncaughtException:', {stack : err.stack, message : err.message});
+  process.exit(1);
+});
 
 if (modes.length == 0) {
   modes = ['download'];

@@ -22,9 +22,9 @@ define('INDEX_NAME', 'document_index');
 
 define('SERVER_COMMON', process.env.SERVER_COMMON);
 
-define('MAX_UPDATE_JOBS', 100);
+define('MAX_DOWNLOAD_JOBS', 3);
 
-define('MAX_DOWNLOAD_JOBS', 1);
+define('MAX_UPDATE_JOBS', 100);
 
 define('MAX_RESUME_DOWNLOAD_JOBS', 10);
 
