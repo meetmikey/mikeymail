@@ -57,7 +57,7 @@ define ('DONT_QUEUE_LOCALHOST', false);
 
 define('HEADER_BATCH_SIZE', 10000)
 
-var gigabyte = 1073741824;
+var gigabyte = 1073741824/5;
 
 // .8 gb
 define ('MAX_BANDWITH_ATTACHMENT', gigabyte * 4/5);
