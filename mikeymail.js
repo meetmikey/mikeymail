@@ -8,7 +8,7 @@ var constants = require ('./constants'),
 
 // default
 var modes = [];
-
+/*
 if (process.env.NODE_ENV == 'localhost' || process.env.NODE_ENV == 'development') {
   var hd = new memwatch.HeapDiff();
 
@@ -25,7 +25,7 @@ if (process.env.NODE_ENV == 'localhost' || process.env.NODE_ENV == 'development'
   });
 
 }
-
+*/
 // get the command line arguments - this will determine whether we 
 // run in initial indexing mode or continuous update mode
 process.argv.forEach(function (val, index, array) {

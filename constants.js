@@ -1,3 +1,6 @@
+var serverCommon = process.env.SERVER_COMMON;
+var uniqueIdGen = require (serverCommon + '/lib/uniqueIdGen');
+
 function define(name, value) {
   Object.defineProperty(exports, name, {
     value : value,
@@ -16,6 +19,8 @@ else if(environment === 'development') {
 else{
   define('ENV', 'localhost');
 }
+
+define('MY_NODE_ID', uniqueIdGen.guid());
 
 define('TEMP_FILES_DIR', '/tmp');
 define('INDEX_NAME', 'document_index');
@@ -38,7 +43,11 @@ define('MONGO_RESUME_DOWNLOAD_POLL_INTERVAL', 60*1000*10); // 10 minutes
 
 define('RESUME_DOWNLOAD_SET_INTERVAL', 60*1000*1); // 1 minute
 
-define('LISTENING_TIMESTAMP_INTERVAL', 60*1000*1);
+define('LISTENING_TIMESTAMP_UPDATE_INTERVAL', 60*1000*1); // 1 minute
+
+define('ONBOARDING_TIMESTAMP_UPDATE_INTERVAL', 60*1000*3);  // 3 minutes
+
+define('ONBOARDING_TIMEESTAMP_RECLAIM_FACTOR', 5);
 
 define('RESUME_DOWNLOAD_AFTER', 24*60*60*1000) // 24 hours
 
@@ -66,3 +75,5 @@ define('ACCESS_TOKEN_UPDATE_TIME_BUFFER', 600000);
 define('MARKETING_TEXT', '("opt-out" OR unsubscribe OR "viewing the newsletter" OR "privacy policy" OR enews OR "edit your preferences" OR "email notifications" OR "update profile" OR smartunsubscribe OR secureunsubscribe OR yahoogroups OR "manage your account" OR "group-digests")');
 
 define('MARKETING_FROM', 'from:(noreply OR no-reply OR amazon.com OR linkedin.com OR facebookmail.com OR auto-confirm OR pinterest.com OR support OR service OR digest OR contact@ OR info@ OR twitter OR member OR confirmation OR @paypal.com OR edelivery@ OR notifications@ OR marketing@ OR zenpayroll.com OR asana.com)');
+
+
