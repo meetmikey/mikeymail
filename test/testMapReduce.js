@@ -1,7 +1,6 @@
 var constants = require ('../constants'),
     imapConnect = require ('../lib/imapConnect'),
     imapRetrieve = require ('../lib/imapRetrieve'),
-    knox = require (constants.SERVER_COMMON + '/lib/s3Utils').client,
     sqsConnect = require(constants.SERVER_COMMON + '/lib/sqsConnect'),
     fs = require ('fs'),
     mongoose = require (constants.SERVER_COMMON + '/lib/mongooseConnect').mongoose,
