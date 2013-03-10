@@ -9,6 +9,7 @@ function define(name, value) {
 }
 
 var environment = process.env.NODE_ENV;
+var cloudEnvironment = process.env.CLOUD_ENV;
 
 if(environment === 'production') {
   define('ENV', 'production');
@@ -19,6 +20,8 @@ else if(environment === 'development') {
 else{
   define('ENV', 'localhost');
 }
+
+define ('USE_AZURE', cloudEnvironment === 'azure');
 
 define('MY_NODE_ID', uniqueIdGen.guid());
 
