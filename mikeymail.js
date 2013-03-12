@@ -6,6 +6,10 @@ var constants = require ('./constants'),
     mailResumeDownloadDaemon = require ('./lib/mailResumeDownloadDaemon'),
     mailUpdateDaemon = require ('./lib/mailUpdateDaemon');
 
+// clear visual indication in logs of restart
+console.log ('\n\n\n\n\n\n\n\n\n\n\n\n\n');
+console.error ('\n\n\n\n\n\n\n\n\n\n\n\n\n');
+
 // default
 var modes = [];
 /*
@@ -45,7 +49,8 @@ if (modes.length == 0) {
   modes = ['download'];
 }
 
-winston.doInfo("mikeymail daemon started in modes: " + modes);
+winston.doInfo("START: mikeymail daemon started in modes: " + modes);
+console.log ("myUniqueId is: %s", constants.MY_NODE_ID);
 
 if (modes.indexOf('download') != -1){
   mailDownloadDaemon.start();
