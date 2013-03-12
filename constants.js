@@ -42,7 +42,7 @@ define('MONGO_OFFLINE_UPDATE_POLL_INTERVAL', 60*1000*10); // 10 minutes
 
 define('OFFLINE_UPDATE_INTERVAL', 60*1000*60); // 60 minutes
 
-define('MONGO_RESUME_DOWNLOAD_POLL_INTERVAL', 60*1000*10); // 10 minutes
+define('MONGO_RESUME_DOWNLOAD_POLL_INTERVAL', 60*1000*5); // 5 minutes
 
 define('RESUME_DOWNLOAD_SET_INTERVAL', 60*1000*1); // 1 minute
 
@@ -60,7 +60,7 @@ define ('DONT_QUEUE_LOCALHOST', false);
 
 define('HEADER_BATCH_SIZE', 10000)
 
-var gigabyte = 1073741824/5;
+var gigabyte = 1073741824/2;
 
 // .8 gb
 define ('MAX_BANDWITH_ATTACHMENT', gigabyte * 4/5);
