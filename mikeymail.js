@@ -1,14 +1,15 @@
+var serverCommon = process.env.SERVER_COMMON;
+
+var winston = require (serverCommon + '/lib/winstonWrapper').winston;
+winston.logBreak();
+
 var constants = require ('./constants'),
-    winston = require (constants.SERVER_COMMON + '/lib/winstonWrapper').winston,
     memwatch = require('memwatch'),
     mailDownloadDaemon = require ('./lib/mailDownloadDaemon'),
     mailListenDaemon = require ('./lib/mailListenDaemon'),
     mailResumeDownloadDaemon = require ('./lib/mailResumeDownloadDaemon'),
     mailUpdateDaemon = require ('./lib/mailUpdateDaemon');
 
-// clear visual indication in logs of restart
-console.log ('\n\n\n\n\n\n\n\n\n\n\n\n\n');
-console.error ('\n\n\n\n\n\n\n\n\n\n\n\n\n');
 
 // default
 var modes = [];
