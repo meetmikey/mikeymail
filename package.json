@@ -6,8 +6,6 @@
     "express": "3.x",
     "mongoose" : "3.x",
     "aws-lib" : "0.2.0",
-    "contextio" : "0.3.0",
-    "imap" : "0.7.7",
     "async" : ">=0.2.6",
     "xoauth2" : ">=0.1.5",
     "memwatch" : ">=0.2.0"
