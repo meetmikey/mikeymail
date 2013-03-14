@@ -1,11 +1,13 @@
+var serverCommon = process.env.SERVER_COMMON;
+
 var constants = require ('../constants'),
     imapConnect = require ('../lib/imapConnect'),
     imapRetrieve = require ('../lib/imapRetrieve'),
-    sqsConnect = require(constants.SERVER_COMMON + '/lib/sqsConnect'),
+    sqsConnect = require(serverCommon + '/lib/sqsConnect'),
     fs = require ('fs'),
-    mongoose = require (constants.SERVER_COMMON + '/lib/mongooseConnect').mongoose,
-    conf = require (constants.SERVER_COMMON + '/conf'),
-    winston = require (constants.SERVER_COMMON + '/lib/winstonWrapper').winston,
+    mongoose = require (serverCommon + '/lib/mongooseConnect').mongoose,
+    conf = require (serverCommon + '/conf'),
+    winston = require (serverCommon + '/lib/winstonWrapper').winston,
     async = require ('async'),
     xoauth2 = require("xoauth2"),
     daemonUtils = require ('../lib/daemonUtils');
