@@ -58,15 +58,17 @@ define ('DONT_QUEUE_LOCALHOST', false);
 
 define('HEADER_BATCH_SIZE', 10000)
 
-var gigabyte = 1073741824/2;
+var gigabyte = 1073741824;
 
-// .8 gb
-define ('MAX_BANDWITH_ATTACHMENT', gigabyte * 4/5);
+// .6 gb
+define ('MAX_BANDWITH_ATTACHMENT', gigabyte * 3/5);
 
-// extra .2 gb for other emails
+// extra .4 gb for other emails
 define ('MAX_BANDWITH_TOTAL', gigabyte);
 
-define ('EMAIL_FETCH_BATCH_SIZE', 100);
+define ('EMAIL_FETCH_BATCH_SIZE_ATTACHMENT', 25);
+
+define ('EMAIL_FETCH_BATCH_SIZE', 50);
 
 define('AWS_RAW_MSG_DIR', '/rawEmail');
 
