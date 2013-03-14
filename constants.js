@@ -28,8 +28,6 @@ define('MY_NODE_ID', uniqueIdGen.guid());
 define('TEMP_FILES_DIR', '/tmp');
 define('INDEX_NAME', 'document_index');
 
-define('SERVER_COMMON', process.env.SERVER_COMMON);
-
 define('MAX_DOWNLOAD_JOBS', 3);
 
 define('MAX_UPDATE_JOBS', 100);
