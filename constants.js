@@ -56,7 +56,7 @@ define ('S3_RETRIES', 4);
 
 define ('DONT_QUEUE_LOCALHOST', false);
 
-define('HEADER_BATCH_SIZE', 10000)
+define('HEADER_BATCH_SIZE', 1000)
 
 var gigabyte = 1073741824;
 
