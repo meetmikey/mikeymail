@@ -28,7 +28,7 @@ define('MY_NODE_ID', uniqueIdGen.guid());
 define('TEMP_FILES_DIR', '/tmp');
 define('INDEX_NAME', 'document_index');
 
-define('MAX_DOWNLOAD_JOBS', 3);
+define('MAX_DOWNLOAD_JOBS', 1);
 
 define('MAX_UPDATE_JOBS', 100);
 
@@ -48,7 +48,7 @@ define('LISTENING_TIMESTAMP_UPDATE_INTERVAL', 60*1000*1); // 1 minute
 
 define('ONBOARDING_TIMESTAMP_UPDATE_INTERVAL', 60*1000*3);  // 3 minutes
 
-define('ONBOARDING_TIMESTAMP_RECLAIM_FACTOR', 5);
+define('ONBOARDING_TIMESTAMP_RECLAIM_FACTOR', 2);
 
 define('RESUME_DOWNLOAD_AFTER', 24*60*60*1000) // 24 hours
 
@@ -56,7 +56,7 @@ define ('S3_RETRIES', 4);
 
 define ('DONT_QUEUE_LOCALHOST', false);
 
-define('HEADER_BATCH_SIZE', 10000)
+define('HEADER_BATCH_SIZE', 1000)
 
 var gigabyte = 1073741824;
 
