@@ -4,6 +4,7 @@ var mikeyMailConstants = require ('./constants'),
     appInitUtils = require(serverCommon + '/lib/appInitUtils'),
     winston = require(serverCommon + '/lib/winstonWrapper').winston,
     memwatch = require('memwatch'),
+    serverCommonConf = require (serverCommon + '/conf'),
     mailDownloadDaemon = require ('./lib/mailDownloadDaemon'),
     mailListenDaemon = require ('./lib/mailListenDaemon'),
     mailResumeDownloadDaemon = require ('./lib/mailResumeDownloadDaemon'),
@@ -15,7 +16,7 @@ var initActions = [
 
 //initApp() will not callback an error.
 //If something fails, it will just exit the process.
-appInitUtils.initApp( 'mikeymail', initActions, function() {
+appInitUtils.initApp( 'mikeymail', initActions, serverCommonConf, function() {
 
   // default
   var modes = [];
