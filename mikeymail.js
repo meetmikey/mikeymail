@@ -47,11 +47,6 @@ appInitUtils.initApp( 'mikeymail', initActions, function() {
     }
   });
 
-  process.on('uncaughtException', function (err) {
-    winston.doError('uncaughtException:', {stack : err.stack, message : err.message});
-    process.exit(1);
-  });
-
   if (modes.length == 0) {
     modes = ['download'];
   }
