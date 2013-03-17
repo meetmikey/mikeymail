@@ -28,7 +28,7 @@ define('MY_NODE_ID', uniqueIdGen.guid());
 define('TEMP_FILES_DIR', '/tmp');
 define('INDEX_NAME', 'document_index');
 
-define('MAX_DOWNLOAD_JOBS', 1);
+define('MAX_DOWNLOAD_JOBS', 2);
 
 define('MAX_UPDATE_JOBS', 100);
 
