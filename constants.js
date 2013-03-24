@@ -61,13 +61,7 @@ define('HEADER_BATCH_SIZE', 1000)
 
 var gigabyte = 1073741824;
 
-// .6 gb
-define ('MAX_BANDWITH_ATTACHMENT', gigabyte * 3/5);
-
-// extra .4 gb for other emails
 define ('MAX_BANDWITH_TOTAL', gigabyte);
-
-define ('EMAIL_FETCH_BATCH_SIZE_ATTACHMENT', 25);
 
 define ('EMAIL_FETCH_BATCH_SIZE', 50);
 
