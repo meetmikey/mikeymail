@@ -50,8 +50,9 @@ define('ONBOARDING_TIMESTAMP_UPDATE_INTERVAL', 60*1000*1);
 define('ONBOARDING_TIMESTAMP_RECLAIM_FACTOR', 2);
 define('RESUME_DOWNLOAD_TIMESTAMP_RECLAIM_FACTOR', 2);
 
+//TODO: CHANGE BACK
 // after we have a gig of data how long do we wait before resuming the account
-define('RESUME_DOWNLOAD_AFTER', 24*60*60*1000) // 24 hours
+define('RESUME_DOWNLOAD_AFTER', 24*60*60*1000/24/60) // 24 hours
 
 define ('S3_RETRIES', 4);
 
@@ -59,7 +60,8 @@ define ('DONT_QUEUE_LOCALHOST', false);
 
 define('HEADER_BATCH_SIZE', 1000)
 
-var gigabyte = 1073741824;
+//TODO: CHANGE BACK AFTER TESTING RESUMES
+var gigabyte = 1073741824/100;
 
 define ('MAX_BANDWITH_TOTAL', gigabyte);
 
