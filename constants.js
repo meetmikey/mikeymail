@@ -1,5 +1,5 @@
 var serverCommon = process.env.SERVER_COMMON;
-var uniqueIdGen = require (serverCommon + '/lib/uniqueIdGen');
+var utils = require(serverCommon + '/lib/utils');
 
 function define(name, value) {
   Object.defineProperty(exports, name, {
@@ -23,7 +23,7 @@ else{
 
 define ('USE_AZURE', cloudEnvironment === 'azure');
 
-define('MY_NODE_ID', uniqueIdGen.guid());
+define('MY_NODE_ID', utils.getUniqueId());
 
 define('TEMP_FILES_DIR', '/tmp');
 define('INDEX_NAME', 'document_index');
