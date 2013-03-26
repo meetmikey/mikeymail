@@ -11,7 +11,7 @@ var initActions = [
 ];
 
 appInitUtils.initApp( 'resumeDownload', initActions, null, function() {
-
+/*
   var userInfo = {
     "__v" : 0,
     "_id" : "514265596a9290970a000007",
@@ -27,7 +27,25 @@ appInitUtils.initApp( 'resumeDownload', initActions, null, function() {
     "locale" : "en",
     "refreshToken" : "1/srvJTjuAVgLuPHGQAu9lwu93zoDHGFDombaRz-PreNg",
     "timestamp" : "2013-03-15T00:03:37.728Z"
+  }*/
+
+  var userInfo = {
+    "__v" : 0,
+    "_id" : "51434e7083da667b0d000005",
+    "accessToken" : "ya29.AHES6ZQyo8U72Spg8fax09HcZQjBRhnhD6ikWgV7xzrXT5s",
+    "displayName" : "Mudit Garg",
+    "email" : "muditgarg@gmail.com",
+    "expiresAt" : "2013-03-19T09:37:45.729Z",
+    "firstName" : "Mudit",
+    "gender" : "male",
+    "gmailScrapeRequested" : true,
+    "googleID" : "111291087832139466141",
+    "lastName" : "Garg",
+    "locale" : "en",
+    "refreshToken" : "1/bzQjJkZh1q0QOIsEMYPbNLf7PJrGaH7FWCaztIwRA3w",
+    "timestamp" : "2013-03-15T16:38:08.468Z"
   }
+
 
   var xoauthParams = daemonUtils.getXOauthParams (userInfo);
   var xoauth2gen = xoauth2.createXOAuth2Generator(xoauthParams);
@@ -54,7 +72,17 @@ appInitUtils.initApp( 'resumeDownload', initActions, null, function() {
       winston.info ('Mailbox opened', mailbox)
 
         // fetch some messages
-        imapRetrieve.getMessagesByUid (myConnection, userInfo._id, [{uid : '1070'}], false, function (err, bandwith) {
+        /*
+        imapRetrieve.getMessagesByUid (myConnection, userInfo._id, [{uid : '174539'}], false, function (err, bandwith) {
+          if (err) {
+            winston.doError (err);
+          }
+          else {
+            winston.info ('all messages callback with bandwith used', bandwith);
+          }
+        });
+        */
+        imapRetrieve.getHeaders (myConnection, userInfo._id, '12345', '174539', '*', null, function (err, bandwith) {
           if (err) {
             winston.doError (err);
           }

@@ -35,20 +35,20 @@ define('MAX_RESUME_DOWNLOAD_JOBS', 10);
 
 
 // polling intervals
-define('MONGO_ACTIVE_CONNECTIONS_POLL_INTERVAL', 60*1000*2); // 2 minutes
-define('MONGO_OFFLINE_UPDATE_POLL_INTERVAL', 60*1000*10); // 10 minutes
-define('MONGO_RESUME_DOWNLOAD_POLL_INTERVAL', 60*1000*2); // 4 minutes
+define('MONGO_ACTIVE_CONNECTIONS_POLL_INTERVAL', 60*1000*2);
+define('MONGO_OFFLINE_UPDATE_POLL_INTERVAL', 60*1000*60);
+define('MONGO_RESUME_DOWNLOAD_POLL_INTERVAL', 60*1000*2);
 
 
 // intervals for how often we update mongo model to say current node is still working on x
 define('RESUME_DOWNLOAD_TIMESTAMP_INTERVAL', 60*1000*1);
-define('LISTENING_TIMESTAMP_UPDATE_INTERVAL', 60*1000*1);
+define('LISTENING_TIMESTAMP_UPDATE_INTERVAL', 60*1000*.5);
 define('ONBOARDING_TIMESTAMP_UPDATE_INTERVAL', 60*1000*1);
 
 // how long we wait above the factor of update interval to declare the node who claimed the job must be dead
 // is this factor multiplied by the corresponding interval above. should be greater than 1.
-define('ONBOARDING_TIMESTAMP_RECLAIM_FACTOR', 2);
-define('RESUME_DOWNLOAD_TIMESTAMP_RECLAIM_FACTOR', 2);
+define('ONBOARDING_TIMESTAMP_RECLAIM_FACTOR', 2.5);
+define('RESUME_DOWNLOAD_TIMESTAMP_RECLAIM_FACTOR', 2.5);
 
 // after we have a gig of data how long do we wait before resuming the account
 define('RESUME_DOWNLOAD_AFTER', 24*60*60*1000); // 24 hours
@@ -59,7 +59,6 @@ define ('DONT_QUEUE_LOCALHOST', false);
 
 define('HEADER_BATCH_SIZE', 1000)
 
-//TODO: CHANGE BACK AFTER TESTING RESUMES
 var gigabyte = 1073741824;
 
 define ('MAX_BANDWITH_TOTAL', gigabyte);
