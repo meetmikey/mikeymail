@@ -11,7 +11,7 @@ var initActions = [
 ];
 
 appInitUtils.initApp( 'resumeDownload', initActions, null, function() {
-/*
+
   var userInfo = {
     "__v" : 0,
     "_id" : "514265596a9290970a000007",
@@ -27,8 +27,9 @@ appInitUtils.initApp( 'resumeDownload', initActions, null, function() {
     "locale" : "en",
     "refreshToken" : "1/srvJTjuAVgLuPHGQAu9lwu93zoDHGFDombaRz-PreNg",
     "timestamp" : "2013-03-15T00:03:37.728Z"
-  }*/
+  }
 
+  /*
   var userInfo = {
     "__v" : 0,
     "_id" : "51434e7083da667b0d000005",
@@ -45,7 +46,7 @@ appInitUtils.initApp( 'resumeDownload', initActions, null, function() {
     "refreshToken" : "1/bzQjJkZh1q0QOIsEMYPbNLf7PJrGaH7FWCaztIwRA3w",
     "timestamp" : "2013-03-15T16:38:08.468Z"
   }
-
+  */
 
   var xoauthParams = daemonUtils.getXOauthParams (userInfo);
   var xoauth2gen = xoauth2.createXOAuth2Generator(xoauthParams);
@@ -81,7 +82,6 @@ appInitUtils.initApp( 'resumeDownload', initActions, null, function() {
             winston.info ('all messages callback with bandwith used', bandwith);
           }
         });
-        */
         imapRetrieve.getHeaders (myConnection, userInfo._id, '12345', '174539', '*', null, function (err, bandwith) {
           if (err) {
             winston.doError (err);
@@ -90,6 +90,7 @@ appInitUtils.initApp( 'resumeDownload', initActions, null, function() {
             winston.info ('all messages callback with bandwith used', bandwith);
           }
         });
+        */
 
     });
 
