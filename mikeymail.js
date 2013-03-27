@@ -18,6 +18,7 @@ var initActions = [
 //If something fails, it will just exit the process.
 appInitUtils.initApp( 'mikeymail', initActions, serverCommonConf, function() {
 
+
   // default
   var modes = [];
   /*
