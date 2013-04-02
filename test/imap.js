@@ -25,7 +25,7 @@ appInitUtils.initApp( 'resumeDownload', initActions, null, function() {
     "hostedDomain" : "mikeyteam.com",
     "lastName" : "Mehta",
     "locale" : "en",
-    "refreshToken" : "1/srvJTjuAVgLuPHGQAu9lwu93zoDHGFDombaRz-PreNg",
+    "refreshToken" : "1/Pz7L9qUASDlLlZQecvLsAspqVBu76iczVH1pZyVLLgY",
     "timestamp" : "2013-03-15T00:03:37.728Z"
   }
 
@@ -71,6 +71,39 @@ appInitUtils.initApp( 'resumeDownload', initActions, null, function() {
 
       winston.info ('Connection opened for user: ' + userInfo.email)
       winston.info ('Mailbox opened', mailbox)
+
+      console.log (myConnection);
+
+      // update mailbox on new mail events
+      myConnection.on ("mail", function (numMsgs) {
+        winston.info("new mail arrived for user: ", {num_messages : numMsgs, userId: userInfo._id, userEmail : userInfo.email});
+      });
+
+      myConnection.on("deleted", function (seqno) {
+        winston.doInfo ("msg deleted with sequence number", {seqno : seqno});
+      });
+
+      myConnection.on("close", function (hadError) {
+        if (hadError) {
+          winston.doError ("the imap connection has closed with error state: ", {error : hadError});
+        }
+        else {
+          winston.doWarn ("imap connection closed for user", {userId :userInfo._id, userEmail : userInfo.email});
+        }
+      });
+
+      myConnection.on ("msgupdate", function (msg) {
+        winston.info ('A MESSAGES FLAGS HAVE CHANGED', {msg : msg});
+      });
+
+      myConnection.on("end", function () {
+        winston.info ("the imap connection has ended");
+      });
+
+      myConnection.on("alert", function (alertMsg) {
+        winston.doError ('Alert message received from IMAP server: ', alertMsg);
+      });
+
 
         // fetch some messages
         /*
