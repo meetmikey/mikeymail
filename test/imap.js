@@ -17,7 +17,7 @@ appInitUtils.initApp( 'resumeDownload', initActions, null, function() {
     "_id" : "514265596a9290970a000007",
     "accessToken" : "ya29.AHES6ZTBuFtcMLEQcC6IvSP768EvPDcRFnvMhBZnde8YkBM",
     "displayName" : "Sagar Mehta",
-    "email" : "sagar@mikeyteam.com",
+    "email" : "rachidi29@gmail.com",
     "expiresAt" : "2013-03-18T08:02:06.712Z",
     "firstName" : "Sagar",
     "gmailScrapeRequested" : true,
@@ -25,7 +25,7 @@ appInitUtils.initApp( 'resumeDownload', initActions, null, function() {
     "hostedDomain" : "mikeyteam.com",
     "lastName" : "Mehta",
     "locale" : "en",
-    "refreshToken" : "1/srvJTjuAVgLuPHGQAu9lwu93zoDHGFDombaRz-PreNg",
+    "refreshToken" : "1/pPxi6iijYqdPRie1TUde_V4UPNv8Xee5OCI90QpIgnw",
     "timestamp" : "2013-03-15T00:03:37.728Z"
   }
 
@@ -70,7 +70,8 @@ appInitUtils.initApp( 'resumeDownload', initActions, null, function() {
       }
 
       winston.info ('Connection opened for user: ' + userInfo.email)
-      winston.info ('Mailbox opened', mailbox)
+      winston.info ('Mailbox opened', mailbox);
+      console.log (mailbox)
 
         // fetch some messages
         /*
