@@ -51,6 +51,28 @@ appInitUtils.initApp( 'resumeDownload', initActions, null, function() {
      "refreshToken" : '1/ddakAiYLGtp3orae67sb3xV1ieZaoOkNrDFv0Il0Vo8'
   }
 
+/*
+  userInfo = { 
+    "googleID" : "107426081184903178467", 
+    "accessHash" : "27f26078ba8148083c7a881904e47ab6c830eac3cb8c79b03bd08d0afc744f0c4b2139d9f0e2a888e069c145c04f58a6fa608ed4c815c43ede45ea3e14c8aeba", 
+    "displayName" : "Shailo R", 
+    "firstName" : "Shailo", 
+    "lastName" : "R", 
+    "email" : "shailo@kidsakeapp.com", 
+    "locale" : "en", 
+    "hostedDomain" : "kidsakeapp.com", 
+    "expiresAt" : "2013-04-03T21:33:14.470Z", 
+    "symHash" : "649b885aa997b75f955761e3380dcbc9ddf525d860af87c751bf1eeac785e775378211e3798894efb7b1ca754f226931fc8fb872f8e0e8140f85d81c9a065b3c", 
+    "symSalt" : "d82e9f61f6bf8db2", 
+    "asymHash" : "$2a$08$pKzXAR/NYY6XgomIaDj52.nqfBplLnJBIchj3eJHsj9uaTH6Ygska", 
+    "asymSalt" : "$2a$08$pKzXAR/NYY6XgomIaDj52.", 
+    "_id" : "515c920a0c0bee4a7b000011", 
+    "timestamp" : "2013-04-03T20:33:14.527Z", 
+    "gmailScrapeRequested" : true, 
+    "refreshToken" : '1/REQutAJcyW_UvpeQSJmhJk4ryU3u9WR5H4PZOoZXeJw',
+    "__v" : 0 
+  }
+*/
 
   /*
   var userInfo = {
