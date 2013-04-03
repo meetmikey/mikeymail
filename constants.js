@@ -69,7 +69,6 @@ define ('EMAIL_FETCH_BATCH_SIZE', 50);
 
 define('AWS_RAW_MSG_DIR', '/rawEmail');
 
-// 10 mins
 define('ACCESS_TOKEN_UPDATE_TIME_BUFFER', 600000);
 
 define('MARKETING_TEXT', '("opt-out" OR unsubscribe OR "viewing the newsletter" OR "privacy policy" OR enews OR "edit your preferences" OR "email notifications" OR "update profile" OR smartunsubscribe OR secureunsubscribe OR yahoogroups OR "manage your account" OR "group-digests")');

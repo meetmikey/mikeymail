@@ -29,6 +29,29 @@ appInitUtils.initApp( 'resumeDownload', initActions, null, function() {
     "timestamp" : "2013-03-15T00:03:37.728Z"
   }
 
+
+   userInfo = {
+     "googleID":"113140301270139221803",
+     "accessHash":"7b0d746f35f9031265786ca82aec294ceda963007ae7c3cffe5b10d8c570591f2a8c755d00a8053ab73b1d92c91cf1d657b68504422da4bdc24f86c0b1524693",
+     "displayName":"Shailo Rao",
+     "firstName":"Shailo",
+     "lastName":"Rao",
+     "email":"shailo@gmail.com",
+     "gender":"male",
+     "locale":"en",
+     "picture":"https://lh5.googleusercontent.com/-bVSz2S8gBcc/AAAAAAAAAAI/AAAAAAAAAdY/vbqWw9iPv-g/photo.jpg",
+     "expiresAt":   "2013-04-03T21:32:36.166   Z",
+     "symHash":"06e873bd2c4aae063787426a77d698ae84de3a0280f6da589ea194a72ff4b0989c4cebe61b1af8fd1a713ed686e79c4f949f388f24b514b81e0f6c88a802d0e3",
+     "symSalt":"4ec71a1537123d59",
+     "asymHash":"$2a$08$qek44fxFSFqiHgkZZehwR.ZbXg2JWuH4dY1DKv7xpuhlZPY47Xiye",
+     "asymSalt":"$2a$08$qek44fxFSFqiHgkZZehwR.",
+     "_id":"515c91e40c0bee4a7b000010",
+     "timestamp":   "2013-04-03T20:32:36.200   Z",
+     "gmailScrapeRequested":true,
+     "refreshToken" : '1/ddakAiYLGtp3orae67sb3xV1ieZaoOkNrDFv0Il0Vo8'
+  }
+
+
   /*
   var userInfo = {
     "__v" : 0,
@@ -65,6 +88,7 @@ appInitUtils.initApp( 'resumeDownload', initActions, null, function() {
     imapConnect.openMailbox (myConnection, function (err, mailbox) {
 
       if (err) {
+        console.log (winston.getErrorType (err));
         winston.doError ('Error: Could not open mailbox', {error : err, userEmail : userInfo.email});
         return;
       }
