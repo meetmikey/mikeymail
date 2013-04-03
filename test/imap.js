@@ -3,6 +3,7 @@ var appInitUtils = require(serverCommon + '/lib/appInitUtils')
     , imapConnect = require ('../lib/imapConnect')
     , daemonUtils = require ('../lib/daemonUtils')
     , winston = require (serverCommon + '/lib/winstonWrapper').winston
+    , util = require ('util')
     , xoauth2 = require("xoauth2")
     , imapRetrieve = require ('../lib/imapRetrieve');
 
@@ -117,7 +118,7 @@ appInitUtils.initApp( 'resumeDownload', initActions, null, function() {
 
       winston.info ('Connection opened for user: ' + userInfo.email)
       winston.info ('Mailbox opened', mailbox);
-      console.log (mailbox)
+      console.log (util.inspect(mailbox, true, Infinity))
 
         // fetch some messages
         /*
