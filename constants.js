@@ -31,7 +31,7 @@ define('INDEX_NAME', 'document_index');
 // how many of each job to do per node
 define('MAX_DOWNLOAD_JOBS', 4);
 define('MAX_UPDATE_JOBS', 20);
-define('MAX_RESUME_DOWNLOAD_JOBS', 4);
+define('MAX_RESUME_DOWNLOAD_JOBS', 2);
 
 
 // polling intervals
@@ -61,7 +61,7 @@ define('HEADER_BATCH_SIZE', 1000);
 
 define ('POLL_IMAP_HACK_TIME', 1000*60*10); // 10 mins
 
-var gigabyte = 1073741824;
+var gigabyte = 1073741824/2;
 
 define ('MAX_BANDWITH_TOTAL', gigabyte);
 
