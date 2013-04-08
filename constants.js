@@ -31,7 +31,7 @@ define('INDEX_NAME', 'document_index');
 // how many of each job to do per node
 define('MAX_DOWNLOAD_JOBS', 4);
 define('MAX_UPDATE_JOBS', 20);
-define('MAX_RESUME_DOWNLOAD_JOBS', 2);
+define('MAX_RESUME_DOWNLOAD_JOBS', 3);
 
 
 // polling intervals
@@ -61,7 +61,7 @@ define('HEADER_BATCH_SIZE', 1000);
 
 define ('POLL_IMAP_HACK_TIME', 1000*60*10); // 10 mins
 
-var gigabyte = 1073741824;
+var gigabyte = 1073741824/2;
 
 define ('MAX_BANDWITH_TOTAL', gigabyte);
 
@@ -73,4 +73,4 @@ define('ACCESS_TOKEN_UPDATE_TIME_BUFFER', 600000);
 
 define('MARKETING_TEXT', '("opt-out" OR unsubscribe OR "viewing the newsletter" OR "privacy policy" OR enews OR "edit your preferences" OR "email notifications" OR "update profile" OR smartunsubscribe OR secureunsubscribe OR yahoogroups OR "manage your account" OR "group-digests")');
 
-define('MARKETING_FROM', 'from:(notifier OR nagios OR noreply OR no-reply OR amazon.com OR linkedin.com OR facebookmail.com OR auto-confirm OR pinterest.com OR support OR service OR digest OR contact@ OR info@ OR twitter OR member OR confirmation OR @paypal.com OR edelivery@ OR notifications@ OR marketing@ OR zenpayroll.com OR asana.com OR reservations@ OR angel.co)');
+define('MARKETING_FROM', 'from:(do-not-reply OR notifier OR nagios OR noreply OR no-reply OR amazon.com OR linkedin.com OR facebookmail.com OR auto-confirm OR pinterest.com OR support OR service OR digest OR contact@ OR info@ OR twitter OR member OR confirmation OR @paypal.com OR edelivery@ OR notifications@ OR marketing@ OR zenpayroll.com OR asana.com OR reservations@ OR angel.co)');
