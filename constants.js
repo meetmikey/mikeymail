@@ -18,7 +18,7 @@ else if(environment === 'development') {
   define('ENV', 'development');
 }
 else{
-  define('ENV', 'localhost');
+  define('ENV', 'local');
 }
 
 define ('USE_AZURE', cloudEnvironment === 'azure');
@@ -73,4 +73,4 @@ define('ACCESS_TOKEN_UPDATE_TIME_BUFFER', 600000);
 
 define('MARKETING_TEXT', '("opt-out" OR unsubscribe OR "viewing the newsletter" OR "privacy policy" OR enews OR "edit your preferences" OR "email notifications" OR "update profile" OR smartunsubscribe OR secureunsubscribe OR yahoogroups OR "manage your account" OR "group-digests")');
 
-define('MARKETING_FROM', 'from:(@proxyvote.com OR bounces@ OR bounce@ OR reservation@ OR @opentable.com OR booking@ OR newsletter@ OR elert@ OR do-not-reply@ OR notifier@ OR nagios OR noreply OR no-reply@ OR @linkedin.com OR facebookmail.com OR auto-confirm@ OR pinterest.com OR support@ OR service@ OR digest OR contact@ OR info@ OR @twitter.com OR member@ OR confirmation@ OR @paypal.com OR edelivery@ OR notifications@ OR marketing@ OR @zenpayroll.com OR @asana.com OR reservations@ OR @angel.co)');
+define('MARKETING_FROM', 'from:(notify@ OR @proxyvote.com OR bounces@ OR bounce@ OR reservation@ OR @opentable.com OR booking@ OR newsletter@ OR elert@ OR do-not-reply@ OR notifier@ OR nagios OR noreply OR no-reply@ OR @linkedin.com OR facebookmail.com OR auto-confirm@ OR pinterest.com OR support@ OR service@ OR digest OR contact@ OR info@ OR @twitter.com OR member@ OR confirmation@ OR @paypal.com OR edelivery@ OR notifications@ OR marketing@ OR @zenpayroll.com OR @asana.com OR reservations@ OR @angel.co)');
