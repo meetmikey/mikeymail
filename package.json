@@ -3,18 +3,16 @@
   "version": "0.0.1",
   "private": true,
   "dependencies": {
-    "express": "3.x",
-    "mongoose" : "3.x",
-    "aws-lib" : "0.2.0",
-    "async" : ">=0.2.6",
-    "xoauth2" : ">=0.1.5",
-    "memwatch" : ">=0.2.0"
+    "async" : "=0.2.7",
+    "imap" : "=0.7.9",
+    "xoauth2" : "=0.1.7",
+    "memwatch" : "=0.2.2"
   },
   "scripts": {
     "start": "app.js"
   },
   "engines": {
-    "node": "0.8.x"
+    "node": "0.10.4"
   },
   "bundleDependencies": [
     "imap"
