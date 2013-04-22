@@ -1,7 +1,4 @@
-node_modules/express
-node_modules/mongoose
-node_modules/aws-lib
+node_modules/imap
 node_modules/async
 node_modules/xoauth2
-node_modules/memwatch
 node_modules/.bin

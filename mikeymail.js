@@ -3,7 +3,6 @@ var serverCommon = process.env.SERVER_COMMON;
 var mikeyMailConstants = require ('./constants'),
     appInitUtils = require(serverCommon + '/lib/appInitUtils'),
     winston = require(serverCommon + '/lib/winstonWrapper').winston,
-    memwatch = require('memwatch'),
     serverCommonConf = require (serverCommon + '/conf'),
     mailDownloadDaemon = require ('./lib/mailDownloadDaemon'),
     mailListenDaemon = require ('./lib/mailListenDaemon'),
@@ -11,34 +10,17 @@ var mikeyMailConstants = require ('./constants'),
     mailUpdateDaemon = require ('./lib/mailUpdateDaemon');
 
 var initActions = [
-  appInitUtils.CONNECT_MONGO
+    appInitUtils.CONNECT_MONGO
+  , appInitUtils.MEMWATCH_MONITOR
 ];
 
 //initApp() will not callback an error.
 //If something fails, it will just exit the process.
 appInitUtils.initApp( 'mikeymail', initActions, serverCommonConf, function() {
 
-
   // default
   var modes = [];
-  /*
-  if (process.env.NODE_ENV == 'localhost' || process.env.NODE_ENV == 'development') {
-    var hd = new memwatch.HeapDiff();
 
-    memwatch.on('leak', function(info) {
-      winston.doError ('LEAK REPORT', {info : info});
-    });
-
-    memwatch.on('stats', function(stats) { 
-      winston.doInfo ('STATS REPORT', {stats : stats});
-      var diff = hd.end();
-
-      winston.doInfo ('HEAP DIFF', {diff :diff});
-      hd = new memwatch.HeapDiff();
-    });
-
-  }
-  */
   // get the command line arguments - this will determine whether we 
   // run in initial indexing mode or continuous update mode
   process.argv.forEach(function (val, index, array) {
