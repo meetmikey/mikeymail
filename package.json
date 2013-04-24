@@ -8,6 +8,7 @@
     "aws-lib" : "0.2.0",
     "async" : ">=0.2.6",
     "xoauth2" : ">=0.1.5",
+    "imap" : "0.7.9",
     "memwatch" : ">=0.2.0"
   },
   "scripts": {
@@ -16,9 +17,6 @@
   "engines": {
     "node": "0.8.x"
   },
-  "bundleDependencies": [
-    "imap"
-  ],
   "env": {
     "PYTHON": "/opt/local/bin/python2.7"
   }
