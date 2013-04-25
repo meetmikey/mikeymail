@@ -11,7 +11,7 @@ var mikeyMailConstants = require ('./constants'),
 
 var initActions = [
     appInitUtils.CONNECT_MONGO
-  , appInitUtils.MEMWATCH_MONITOR
+  //, appInitUtils.MEMWATCH_MONITOR
 ];
 
 //initApp() will not callback an error.
