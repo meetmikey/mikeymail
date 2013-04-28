@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "async" : "=0.2.7"
-    , "imap" : "=0.7.10"
+    , "imap" : "=0.7.11"
     , "xoauth2" : "=0.1.7"
   },
   "scripts": {
