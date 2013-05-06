@@ -30,7 +30,7 @@ appInitUtils.initApp( 'resumeDownload', initActions, null, function() {
     "timestamp" : "2013-03-15T00:03:37.728Z"
   }
 
-
+/*
    userInfo = {
      "googleID":"113140301270139221803",
      "accessHash":"7b0d746f35f9031265786ca82aec294ceda963007ae7c3cffe5b10d8c570591f2a8c755d00a8053ab73b1d92c91cf1d657b68504422da4bdc24f86c0b1524693",
@@ -52,7 +52,7 @@ appInitUtils.initApp( 'resumeDownload', initActions, null, function() {
      "refreshToken" : '1/ddakAiYLGtp3orae67sb3xV1ieZaoOkNrDFv0Il0Vo8'
   }
 
-/*
+
   userInfo = { 
     "googleID" : "107426081184903178467", 
     "accessHash" : "27f26078ba8148083c7a881904e47ab6c830eac3cb8c79b03bd08d0afc744f0c4b2139d9f0e2a888e069c145c04f58a6fa608ed4c815c43ede45ea3e14c8aeba", 
@@ -73,7 +73,7 @@ appInitUtils.initApp( 'resumeDownload', initActions, null, function() {
     "refreshToken" : '1/REQutAJcyW_UvpeQSJmhJk4ryU3u9WR5H4PZOoZXeJw',
     "__v" : 0 
   }
-*/
+
 
   /*
   var userInfo = {
@@ -116,10 +116,28 @@ appInitUtils.initApp( 'resumeDownload', initActions, null, function() {
         return;
       }
 
+      myConnection.on("close", function (hadError) {
+        if (hadError) {
+          winston.doError ("the imap connection has closed with error state: ", {error : hadError});
+        }
+        else {
+          winston.doWarn ("imap connection closed for user", {userId :userInfo._id, userEmail : userInfo.email});
+        }
+      })
+
       winston.info ('Connection opened for user: ' + userInfo.email)
       winston.info ('Mailbox opened', mailbox);
       console.log (util.inspect(mailbox, true, Infinity))
 
+      setTimeout (function () {
+
+        imapConnect.closeMailbox (myConnection, function (err) {
+          console.log ('box closed');
+          if (err) {
+            console.log ('error closing box', err);
+          }
+        })
+      }, 10000);
         // fetch some messages
         /*
         imapRetrieve.getMessagesByUid (myConnection, userInfo._id, [{uid : '174539'}], false, function (err, bandwith) {
