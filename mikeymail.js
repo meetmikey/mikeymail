@@ -6,7 +6,7 @@ var mikeyMailConstants = require ('./constants'),
     serverCommonConf = require (serverCommon + '/conf'),
     mailDownloadDaemon = require ('./lib/mailDownloadDaemon'),
     mailListenDaemon = require ('./lib/mailListenDaemon'),
-    mailResumeDownloadDaemon = require ('./lib/mailResumeDownloadDaemon'),
+    mailResumeDownloadDaemon = require ('./lib/hasAttachmentBackfill'),
     mailUpdateDaemon = require ('./lib/mailUpdateDaemon');
 
 var initActions = [
