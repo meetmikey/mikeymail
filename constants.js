@@ -53,8 +53,6 @@ define('RESUME_DOWNLOAD_TIMESTAMP_RECLAIM_FACTOR', 2.5);
 // after we have a gig of data how long do we wait before resuming the account
 define('RESUME_DOWNLOAD_AFTER', 24*60*60*1000); // 24 hours
 
-define ('S3_RETRIES', 4);
-
 define ('DONT_QUEUE_LOCALHOST', false);
 
 define('HEADER_BATCH_SIZE', 1000);
