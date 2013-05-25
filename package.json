@@ -6,6 +6,7 @@
     "async" : "=0.2.7"
     , "imap" : "https://github.com/meetmikey/node-imap/archive/master.tar.gz"
     , "xoauth2" : "=0.1.7"
+    , "underscore" : "=1.4.4"
   },
   "scripts": {
     "start": "app.js"

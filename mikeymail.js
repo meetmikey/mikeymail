@@ -6,8 +6,7 @@ var mikeyMailConstants = require ('./constants'),
     serverCommonConf = require (serverCommon + '/conf'),
     mailDownloadDaemon = require ('./lib/mailDownloadDaemon'),
     mailListenDaemon = require ('./lib/mailListenDaemon'),
-    mailResumeDownloadDaemon = require ('./lib/mailResumeDownloadDaemon'),
-    mailUpdateDaemon = require ('./lib/mailUpdateDaemon');
+    mailResumeDownloadDaemon = require ('./lib/mailResumeDownloadDaemon');
 
 var initActions = [
     appInitUtils.CONNECT_MONGO
@@ -40,10 +39,6 @@ appInitUtils.initApp( 'mikeymail', initActions, serverCommonConf, function() {
 
   if (modes.indexOf('download') != -1){
     mailDownloadDaemon.start();
-  }
-
-  if (modes.indexOf('update') != -1) {
-    //mailUpdateDaemon.start();
   }
 
   if (modes.indexOf('resume') != -1) {
