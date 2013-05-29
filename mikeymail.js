@@ -35,8 +35,8 @@ appInitUtils.initApp( 'mikeymail', initActions, serverCommonConf, function() {
     modes = ['download'];
   }
 
-  winston.doInfo("START: mikeymail daemon started in modes: " + modes);
-  console.log ("myUniqueId is: %s", mikeyMailConstants.MY_NODE_ID);
+  winston.doInfo('START: mikeymail daemon started in modes: ' + modes, {}, true);
+  winston.doInfo('myUniqueId', {myUniqueId: mikeyMailConstants.MY_NODE_ID}, true);
 
   if (modes.indexOf('download') != -1){
     mailDownloadDaemon.start();

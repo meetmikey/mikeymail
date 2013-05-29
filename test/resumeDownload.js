@@ -1,6 +1,7 @@
 var serverCommon = process.env.SERVER_COMMON;
 var mongoPoll = require ('../lib/mongoPoll')
-  , appInitUtils = require(serverCommon + '/lib/appInitUtils');
+  , appInitUtils = require(serverCommon + '/lib/appInitUtils')
+  , winston = require(serverCommon + '/lib/winstonWrapper').winston
 
 
 var initActions = [
@@ -9,7 +10,7 @@ var initActions = [
 
 appInitUtils.initApp( 'resumeDownload', initActions, null, function() {
   mongoPoll.pollForResumeDownload (function (err) {
-    console.log ('done');
+    winston.doInfo('done');
   })
 })
 
