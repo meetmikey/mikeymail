@@ -53,8 +53,6 @@ define('RESUME_DOWNLOAD_TIMESTAMP_RECLAIM_FACTOR', 2.5);
 // after we have a gig of data how long do we wait before resuming the account
 define('RESUME_DOWNLOAD_AFTER', 24*60*60*1000); // 24 hours
 
-define ('S3_RETRIES', 4);
-
 define ('DONT_QUEUE_LOCALHOST', false);
 
 define('HEADER_BATCH_SIZE', 1000);
@@ -76,3 +74,5 @@ define('ACCESS_TOKEN_UPDATE_TIME_BUFFER', 600000);
 define('MARKETING_TEXT', '("opt-out" OR unsubscribe OR "viewing the newsletter" OR "privacy policy" OR enews OR "edit your preferences" OR "email notifications" OR "update profile" OR smartunsubscribe OR secureunsubscribe OR yahoogroups OR "manage your account" OR "group-digests")');
 
 define('MARKETING_FROM', 'from:(notify@ OR notification@ OR notifications@ OR mailer-daemon@ OR @proxyvote.com OR bounces@ OR bounce@ OR pinbot@ OR reservation@ OR booking@ OR bookings@ OR newsletter@ OR elert@ OR do-not-reply@ OR notifier@ OR nagios@ OR noreply@ OR no-reply@ OR @facebookmail.com OR auto-confirm@ OR support@ OR service@ OR contact@ OR info@ OR member@ OR confirmation@ OR paypal@ OR edelivery@ OR marketing@ OR reply@ OR reservations@)');
+
+define('ERROR_TYPE_ALL_MAIL_DOESNT_EXIST', 'ALL_MAIL_DOESNT_EXIST_ERR')

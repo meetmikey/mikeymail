@@ -61,8 +61,7 @@ var constants = require ('../constants'),
             return
           }
 
-          winston.info ('Connection opened for user: ' + userInfo.email)
-          winston.info ('Mailbox opened', mailbox)
+          winston.doInfo('Mailbox opened for user', {email: userInfo.email, mailbox: mailbox});
 
           var operations = [
             startAsync,
@@ -94,11 +93,11 @@ var constants = require ('../constants'),
                   winston.doError ('Could not close mailbox', err)
                 }
                 else {
-                  winston.info ('mailbox closed for user ' + userInfo.email)
+                  winston.doInfo('mailbox closed for user', {email: userInfo.email});
                 }
               })
 
-              winston.info ('Finished updating for user ' + userInfo.email)
+              winston.doInfo('Finished updating for user ', {email: userInfo.email})
             }
 
           })

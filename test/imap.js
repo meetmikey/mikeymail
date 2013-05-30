@@ -111,8 +111,7 @@ appInitUtils.initApp( 'resumeDownload', initActions, null, function() {
     imapConnect.openMailbox (myConnection, function (err, mailbox) {
 
       if (err) {
-        console.log (winston.getErrorType (err));
-        winston.doError ('Error: Could not open mailbox', {error : err, userEmail : userInfo.email});
+        winston.doError ('Error: Could not open mailbox', {error : err, userEmail : userInfo.email, errorType: winston.getErrorType (err)});
         return;
       }
 
@@ -125,35 +124,33 @@ appInitUtils.initApp( 'resumeDownload', initActions, null, function() {
         }
       })
 
-      winston.info ('Connection opened for user: ' + userInfo.email)
-      winston.info ('Mailbox opened', mailbox);
-      console.log (util.inspect(mailbox, true, Infinity))
+      winston.doInfo ('Mailbox opened for user' + {email: userInfo.email, mailbox: mailbox})
 
       setTimeout (function () {
 
         imapConnect.closeMailbox (myConnection, function (err) {
-          console.log ('box closed');
+          winston.doInfo('mailbox closed');
           if (err) {
-            console.log ('error closing box', err);
+            winston.doInfo('error closing mailbox', {err: err});
           }
         })
       }, 10000);
         // fetch some messages
         /*
-        imapRetrieve.getMessagesByUid (myConnection, userInfo._id, [{uid : '174539'}], false, function (err, bandwith) {
+        imapRetrieve.getMessagesByUid (myConnection, userInfo._id, [{uid : '174539'}], false, function (err, bandwidth) {
           if (err) {
             winston.doError (err);
           }
           else {
-            winston.info ('all messages callback with bandwith used', bandwith);
+            winston.doInfo ('all messages callback with bandwidth used', {bandwidth: bandwidth});
           }
         });
-        imapRetrieve.getHeaders (myConnection, userInfo._id, '12345', '174539', '*', null, function (err, bandwith) {
+        imapRetrieve.getHeaders (myConnection, userInfo._id, '12345', '174539', '*', null, function (err, bandwidth) {
           if (err) {
             winston.doError (err);
           }
           else {
-            winston.info ('all messages callback with bandwith used', bandwith);
+            winston.doInfo ('all messages callback with bandwidth used', {bandwidth: bandwidth});
           }
         });
         */

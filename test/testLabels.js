@@ -57,4 +57,4 @@ var mailObject = {
 }
 
 var test = exports.checkLabelIsInvalid (mailObject, {'DRAFTS' : 'Drafts'})
-console.log (test)
+winston.doInfo('test', {test: test});
