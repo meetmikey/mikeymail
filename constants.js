@@ -61,8 +61,6 @@ define ('POLL_IMAP_HACK_TIME', 1000*60*10); // 10 mins
 
 var gigabyte = 1073741824;
 
-define ('ONE_DAY_IN_MS', 24*60*60*1000);
-
 define ('MAX_BANDWITH_TOTAL', gigabyte * 1.5);
 
 define ('EMAIL_FETCH_BATCH_SIZE', 50);
