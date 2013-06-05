@@ -57,8 +57,6 @@ define ('DONT_QUEUE_LOCALHOST', false);
 
 define('HEADER_BATCH_SIZE', 1000);
 
-define ('POLL_IMAP_HACK_TIME', 1000*60*10); // 10 mins
-
 var gigabyte = 1073741824;
 
 define ('MAX_BANDWITH_TOTAL', gigabyte * 1.5);
