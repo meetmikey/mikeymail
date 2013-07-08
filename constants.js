@@ -67,7 +67,7 @@ define('AWS_RAW_MSG_DIR', '/rawEmail');
 
 define('ACCESS_TOKEN_UPDATE_TIME_BUFFER', 600000);
 
-define('MARKETING_TEXT', '("opt-out" OR unsubscribe OR "viewing the newsletter" OR "privacy policy" OR enews OR "edit your preferences" OR "email notifications" OR "update profile" OR smartunsubscribe OR secureunsubscribe OR yahoogroups OR "manage your account" OR "group-digests")');
+define('MARKETING_TEXT', '("opt-out" OR unsubscribe OR "viewing the newsletter" OR enews OR "edit your preferences" OR smartunsubscribe OR secureunsubscribe OR yahoogroups OR "manage your account" OR "group-digests")');
 
 define('MARKETING_FROM', 'from:(notify@ OR notification@ OR notifications@ OR mailer-daemon@ OR @proxyvote.com OR bounces@ OR bounce@ OR pinbot@ OR reservation@ OR booking@ OR bookings@ OR newsletter@ OR elert@ OR do-not-reply@ OR notifier@ OR nagios@ OR noreply@ OR no-reply@ OR @facebookmail.com OR auto-confirm@ OR support@ OR service@ OR contact@ OR info@ OR member@ OR confirmation@ OR paypal@ OR edelivery@ OR marketing@ OR reply@ OR reservations@)');
 
