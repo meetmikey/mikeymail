@@ -12,10 +12,10 @@ var initActions = [
   appInitUtils.CONNECT_MONGO
 ];
 
+var userInfo = {"shortId":"9s","googleID":"105193733433707716669","accessHash":"93b98366e37c8824891a82cda2ad632a46ceffe5f8c29dd04a509d8483c631631483f132da276f602382676e68911d5ceb7f45e300683216c303c892e5b2132e","displayName":"Tomáš Růžička","firstName":"Tomáš","lastName":"Růžička","email":"zusex4@gmail.com","gender":"male","locale":"en","picture":"https://lh5.googleusercontent.com/-r3kq5MYQCm8/AAAAAAAAAAI/AAAAAAAAHhQ/4ndf_kBySY8/photo.jpg","expiresAt":"2013-07-03T20:54:04.569Z","symHash":"bf93f8feed65b32a613c6bad46554d2360a0d73261ed84718a19b49951a27b2ddb33c0fa2df246b11925fd73ee77bcb888146070182505e2de913070eb26d6de","symSalt":"b69950f6aae0cc40","asymHash":"$2a$08$y85VvYZJ6dCdi0qlPlyft.h6uqi92Mel5iYfEtnY4HYwclPFEbXBa","asymSalt":"$2a$08$y85VvYZJ6dCdi0qlPlyft.","_id":"51d4815ce992bcdf6100504e","__v":0,"isPremium":false,"daysLimit":90,"minMRProcessedDate":"2013-07-03T19:54:04.631Z","minProcessedDate":"2013-07-03T19:54:04.631Z","timestamp":"2013-07-03T19:54:04.630Z","invalidToken":false,"gmailScrapeRequested":true,"accessToken":"ya29.AHES6ZQHRpCvHjVqWKwnJM_2OsMoZv7O-AA0SGf_-cks-9g","refreshToken":"1/s9yEFSvdW4_oCUMcVqMvIZndpR3a7pstgKM5eYDNVUg","directReferralLink":"http://gmailw.in/9s/d","facebookReferralLink":"http://gmailw.in/9s/f","twitterReferralLink":"http://gmailw.in/9s/t","id":"51d4815ce992bcdf6100504e"}
+
+
 appInitUtils.initApp( 'resumeDownload', initActions, null, function() {
-
-
-  UserModel.findById ("51c34ae5bf81d63633000009", function (err, userInfo) {
 
     console.log (userInfo.accessToken)
 
@@ -81,8 +81,6 @@ appInitUtils.initApp( 'resumeDownload', initActions, null, function() {
           */
 
       });
-
-    });
   })
 
 });
