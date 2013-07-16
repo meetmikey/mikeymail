@@ -29,7 +29,7 @@ define('TEMP_FILES_DIR', '/tmp');
 define('INDEX_NAME', 'document_index');
 
 // how many of each job to do per node
-define('MAX_DOWNLOAD_JOBS', 4);
+define('MAX_DOWNLOAD_JOBS', 3);
 define('MAX_UPDATE_JOBS', 20);
 define('MAX_RESUME_DOWNLOAD_JOBS', 3);
 
