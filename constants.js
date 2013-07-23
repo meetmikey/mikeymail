@@ -73,3 +73,6 @@ define('MARKETING_FROM', 'from:(notify@ OR notification@ OR notifications@ OR ma
 
 define('ERROR_TYPE_ALL_MAIL_DOESNT_EXIST', 'ALL_MAIL_DOESNT_EXIST_ERR')
 define('ERROR_TYPE_NO_BOX_TO_OPEN', 'NO_MAILBOX_TO_OPEN')
+
+// 3 days if we try every 15 minutes after sending all mail error
+define('MAX_ALLMAIL_ONBOARDING_ATTEMPTS', 1080);
