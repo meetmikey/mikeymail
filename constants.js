@@ -37,7 +37,7 @@ define('MAX_RESUME_DOWNLOAD_JOBS', 2);
 // polling intervals
 define('MONGO_ACTIVE_CONNECTIONS_POLL_INTERVAL', 60*1000*2);
 define('MONGO_OFFLINE_UPDATE_POLL_INTERVAL', 60*1000*60);
-define('MONGO_RESUME_DOWNLOAD_POLL_INTERVAL', 60*1000*2);
+define('MONGO_RESUME_DOWNLOAD_POLL_INTERVAL', 60*1000*1);
 
 
 // intervals for how often we update mongo model to say current node is still working on x
