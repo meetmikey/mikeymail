@@ -63,7 +63,7 @@ define ('MAX_BANDWITH_TOTAL', gigabyte * 1.5);
 
 define ('EMAIL_FETCH_BATCH_SIZE', 50);
 
-define ('RESUME_BATCH_SIZE', 10);
+define ('RESUME_BATCH_SIZE', 1000);
 
 define('AWS_RAW_MSG_DIR', '/rawEmail');
 
