@@ -37,7 +37,7 @@ define('MAX_RESUME_DOWNLOAD_JOBS', 2);
 // polling intervals
 define('MONGO_ACTIVE_CONNECTIONS_POLL_INTERVAL', 60*1000*2);
 define('MONGO_OFFLINE_UPDATE_POLL_INTERVAL', 60*1000*60);
-define('MONGO_RESUME_DOWNLOAD_POLL_INTERVAL', 60*1000*2);
+define('MONGO_RESUME_DOWNLOAD_POLL_INTERVAL', 60*1000*1);
 
 
 // intervals for how often we update mongo model to say current node is still working on x
@@ -62,6 +62,8 @@ var gigabyte = 1073741824;
 define ('MAX_BANDWITH_TOTAL', gigabyte * 1.5);
 
 define ('EMAIL_FETCH_BATCH_SIZE', 50);
+
+define ('RESUME_BATCH_SIZE', 1000);
 
 define('AWS_RAW_MSG_DIR', '/rawEmail');
 
