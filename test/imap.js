@@ -64,7 +64,7 @@ appInitUtils.initApp( 'imap', initActions, null, function() {
       var myConnection = imapConnect.createImapConnection (userInfo.email, token)
       
       // open mailbox
-      imapConnect.openMailbox (myConnection, function (err, mailbox) {
+      imapConnect.openMailbox (myConnection, userInfo.email, function (err, mailbox) {
 
         if (err) {
           winston.doError ('Error: Could not open mailbox', {error : err, userEmail : userInfo.email, errorType: winston.getErrorType (err)});
@@ -82,7 +82,6 @@ appInitUtils.initApp( 'imap', initActions, null, function() {
 
         var uploadsDone = [];
         var onMessageEvents = [];
-        //[ 94, 93, 92, 91, 35 ]
         var fetch = myConnection.fetch('96', {bodies: [''], size: true });
 
         fetch.on ('message', function (msg, seqno) {
