@@ -14,8 +14,6 @@ var initActions = [
   //, appInitUtils.MEMWATCH_MONITOR
 ];
 
-serverCommonConf.turnDebugModeOn();
-
 //initApp() will not callback an error.
 //If something fails, it will just exit the process.
 appInitUtils.initApp( 'mikeymail', initActions, serverCommonConf, function() {
