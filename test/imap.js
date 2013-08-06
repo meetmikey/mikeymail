@@ -46,7 +46,7 @@ var userInfo = {
 
 
 appInitUtils.initApp( 'imap', initActions, null, function() {
-  UserModel.findById ("51ffeaa4820a4a7a1700000a", function (err, userInfo) {
+  UserModel.findById ("52002b49a108c2a729000010", function (err, userInfo) {
 
     console.log (userInfo.accessToken)
 
@@ -80,30 +80,53 @@ appInitUtils.initApp( 'imap', initActions, null, function() {
           }
         })
 
-        winston.doInfo ('Mailbox opened for user' + {email: userInfo.email, mailbox: mailbox})
+        var uploadsDone = [];
+        var onMessageEvents = [];
+        //[ 94, 93, 92, 91, 35 ]
+        var fetch = myConnection.fetch('96', {bodies: [''], size: true });
 
-        imapRetrieve.getIdsOfMessagesWithAttachments (myConnection, '511', '566', [ 511, 565, 567 ], function (err, results) {
+        fetch.on ('message', function (msg, seqno) {
+          onMessageEvents.push (seqno)
+          console.log ('on message len', onMessageEvents.length)
 
-        })
+          var buffer = '', count = 0;
 
-        // fetch some messages
-        imapRetrieve.getMessagesByUid (myConnection, userInfo._id, [{uid : '174539'}], false, function (err, bandwidth) {
-          if (err) {
-            winston.doError (err);
-          }
-          else {
-            winston.doInfo ('all messages callback with bandwidth used', {bandwidth: bandwidth});
-          }
+          msg.on('body', function (stream, info) {
+            stream.on('data', function(chunk) {
+              count += chunk.length;
+              buffer += chunk.toString('binary');
+            });
+          });
+
+          msg.on('attributes', function(attrs) {
+            console.log ('attributes function called', attrs);
+            msg.uid = attrs.uid;
+            msg.size = attrs.size;
+          });
+
+          msg.on('end', function() {
+            console.log ('MSG END EVENT');
+            console.log ('end function called', msg.uid);
+            uploadsDone.push (msg.uid);
+            console.log ('message end uploads length', uploadsDone.length);
+
+          });
         });
 
-        imapRetrieve.getHeaders (myConnection, userInfo._id, '12345', '174539', '*', null, function (err, bandwidth) {
-          if (err) {
-            winston.doError (err);
-          }
-          else {
-            winston.doInfo ('all messages callback with bandwidth used', {bandwidth: bandwidth});
-          }
+
+        fetch.on ('end', function () {
+          console.log ('FETCH END EVENT');
+          console.log ('fetch end uploads length', uploadsDone.length);
+
+          //getAllMessagesCallback (null, bandwithUsed);
         });
+
+        fetch.on ('error', function (err) {
+          console.log ('fetch on error');
+
+          //getAllMessagesCallback (winston.makeError ('error fetching mail bodies', {err : err}));
+        });
+
 
       });
     });
