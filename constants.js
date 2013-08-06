@@ -48,7 +48,7 @@ define('ONBOARDING_TIMESTAMP_UPDATE_INTERVAL', 60*1000*1);
 
 // how long we wait above the factor of update interval to declare the node who claimed the job must be dead
 // is this factor multiplied by the corresponding interval above. should be greater than 1.
-define('ONBOARDING_TIMESTAMP_RECLAIM_FACTOR', 1); //TODO: change back
+define('ONBOARDING_TIMESTAMP_RECLAIM_FACTOR', 2.5);
 define('RESUME_DOWNLOAD_TIMESTAMP_RECLAIM_FACTOR', 2.5);
 
 // after we have a gig of data how long do we wait before resuming the account
