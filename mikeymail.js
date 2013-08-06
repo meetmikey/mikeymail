@@ -10,6 +10,7 @@ var mikeyMailConstants = require ('./constants'),
 
 var initActions = [
     appInitUtils.CONNECT_MONGO
+  , appInitUtils.RESTART_EMAIL
   //, appInitUtils.MEMWATCH_MONITOR
 ];
 
