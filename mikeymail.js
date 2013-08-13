@@ -21,6 +21,8 @@ appInitUtils.initApp( 'mikeymail', initActions, serverCommonConf, function() {
   // default
   var modes = [];
 
+  serverCommonConf.turnDebugModeOn();
+
   // get the command line arguments - this will determine whether we 
   // run in initial indexing mode or continuous update mode
   process.argv.forEach(function (val, index, array) {
