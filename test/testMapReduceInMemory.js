@@ -171,8 +171,8 @@ appInitUtils.initApp( 'testMapReduceInMemory', initActions, conf, function() {
   for (key in mrResults.sentDict) {
     var keyObj = {
       _id: {
-          userId:  "518840e7c267f56958000009"
-        , email: key
+          email: key
+        , userId:  "518840e7c267f56958000009"
       }
     };
 
@@ -190,8 +190,8 @@ appInitUtils.initApp( 'testMapReduceInMemory', initActions, conf, function() {
   for (key in mrResults.coReceiveDict) {
     var keyObj = {
       _id: {
-          userId:  "518840e7c267f56958000009"
-        , email: key
+          email: key
+        , userId:  "518840e7c267f56958000009"
       }
     };
 
@@ -209,8 +209,8 @@ appInitUtils.initApp( 'testMapReduceInMemory', initActions, conf, function() {
   for (key in mrResults.receiveDict) {
     var keyObj = {
       _id: {
-          userId:  "518840e7c267f56958000009"
-        , email: key
+          email: key
+        , userId:  "518840e7c267f56958000009"
       }
     };
     var increment = mrResults.receiveDict[key];
