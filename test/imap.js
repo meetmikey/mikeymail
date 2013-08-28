@@ -2,8 +2,10 @@ var serverCommon = process.env.SERVER_COMMON;
 var appInitUtils = require(serverCommon + '/lib/appInitUtils')
     , imapConnect = require ('../lib/imapConnect')
     , daemonUtils = require ('../lib/daemonUtils')
+    , fs = require ('fs')
     , winston = require (serverCommon + '/lib/winstonWrapper').winston
     , util = require ('util')
+    , Imap = require ('imap')
     , xoauth2 = require("xoauth2")
     , UserModel = require (serverCommon + '/schema/user').UserModel
     , imapRetrieve = require ('../lib/imapRetrieve');
@@ -13,7 +15,7 @@ var initActions = [
 ];
 
 appInitUtils.initApp( 'imap', initActions, null, function() {
-  UserModel.findById ("52047ed15974ce186e004d66", function (err, userInfo) {
+  UserModel.findById ("52147bd9c7db018f2a008fd2", function (err, userInfo) {
 
     var xoauthParams = daemonUtils.getXOauthParams (userInfo);
     var xoauth2gen = xoauth2.createXOAuth2Generator(xoauthParams);
@@ -47,50 +49,63 @@ appInitUtils.initApp( 'imap', initActions, null, function() {
 
         var uploadsDone = [];
         var onMessageEvents = [];
-        var fetch = myConnection.fetch('96', {bodies: [''], size: true });
 
-        fetch.on ('message', function (msg, seqno) {
-          onMessageEvents.push (seqno)
-          console.log ('on message len', onMessageEvents.length)
+      var fetch = myConnection.fetch('107721', { bodies: [''], size: true });
 
-          var buffer = '', count = 0;
+      fetch.on ('message', function (msg, uid) {
+        console.log ('got message', uid)
+        var buffer = '', count = 0;
+
+        msg.on('body', function (stream, info) {
+          stream.on('data', function(chunk) {
+            count += chunk.length;
+            buffer += chunk.toString('binary');
+          });
+        });
+
+        msg.on ('end', function() {
+          fs.writeFileSync ('myfile', buffer);
+        })
+
+      })
+
+      /*
+        var fetch = myConnection.fetch('107721', {
+          bodies: 'HEADER.FIELDS (MESSAGE-ID FROM TO CC BCC DATE)',
+          size: true
+        });
+
+        console.log ("ABOUT TO FETCH")
+
+        fetch.on ('message', function (msg, uid) {
+          console.log ('FETCH ON MESSAGE')
 
           msg.on('body', function (stream, info) {
+            var buffer = '', count = 0;
+
             stream.on('data', function(chunk) {
               count += chunk.length;
-              buffer += chunk.toString('binary');
+              buffer += chunk.toString('utf8'); //TODO: binary?
+            });
+
+            stream.once('end', function() {
+              if (info.which !== 'TEXT') {
+                var hdrs = Imap.parseHeader (buffer, null, uid);
+              }
             });
           });
 
-          msg.on('attributes', function(attrs) {
-            console.log ('attributes function called', attrs);
-            msg.uid = attrs.uid;
-            msg.size = attrs.size;
-          });
+        })
+        */
 
-          msg.on('end', function() {
-            console.log ('MSG END EVENT');
-            console.log ('end function called', msg.uid);
-            uploadsDone.push (msg.uid);
-            console.log ('message end uploads length', uploadsDone.length);
+        fetch.on ('end', function () { 
+          console.log ('FETCH END')
+        })
 
-          });
-        });
-
-
-        fetch.on ('end', function () {
-          console.log ('FETCH END EVENT');
-          console.log ('fetch end uploads length', uploadsDone.length);
-
-          //getAllMessagesCallback (null, bandwithUsed);
-        });
 
         fetch.on ('error', function (err) {
-          console.log ('fetch on error');
-
-          //getAllMessagesCallback (winston.makeError ('error fetching mail bodies', {err : err}));
+          winston.doError ('FETCH ERROR', {msg : err.message, stack : err.stack});
         });
-
 
       });
     });
