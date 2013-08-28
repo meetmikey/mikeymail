@@ -21,6 +21,8 @@ else{
   define('ENV', 'local');
 }
 
+define ('ACCESS_TOKEN_UPDATE_TIME_BUFFER', 10*1000*60); // 10 mins
+
 // use azure for raw email
 define ('USE_AZURE', true);
 
