@@ -18,7 +18,7 @@ var initActions = [
 //ObjectId("521d38054e078def1a00000a")
 
 appInitUtils.initApp( 'imap', initActions, null, function() {
-  UserModel.findById ("521d38054e078def1a00000a", function (err, userInfo) {
+  UserModel.findById ("521ec85a80a0cb453900000a", function (err, userInfo) {
 
     var xoauthParams = daemonUtils.getXOauthParams (userInfo);
     var xoauth2gen = xoauth2.createXOAuth2Generator(xoauthParams);
@@ -73,7 +73,7 @@ appInitUtils.initApp( 'imap', initActions, null, function() {
 
       })*/
 
-        var fetch = myConnection.fetch('7', {
+        var fetch = myConnection.fetch('174805', {
           bodies: 'HEADER.FIELDS (MESSAGE-ID FROM TO CC BCC DATE)',
           size: true
         });
@@ -95,8 +95,8 @@ appInitUtils.initApp( 'imap', initActions, null, function() {
             stream.once('end', function() {
               if (info.which !== 'TEXT') {
                 var hdrs = Imap.parseHeader (buffer);
-                mailUtils.normalizeAddressArrays (hdrs);
                 console.log ('parsedheaders', hdrs)
+                fs.writeFileSync ('headers', buffer);
                 console.log ('ALL RECIPIENTS', mailUtils.getAllRecipients (hdrs))
               }
             });
