@@ -64,7 +64,7 @@ var gigabyte = 1073741824;
 
 define ('MAX_BANDWITH_TOTAL', gigabyte * 1.5);
 
-define ('EMAIL_FETCH_BATCH_SIZE', 50);
+define ('EMAIL_FETCH_BATCH_SIZE', 100);
 
 define ('RESUME_BATCH_SIZE', 1000);
 
