@@ -7,6 +7,7 @@ var appInitUtils = require(serverCommon + '/lib/appInitUtils')
     , util = require ('util')
     , Imap = require ('imap')
     , xoauth2 = require("xoauth2")
+    , mailUtils = require (serverCommon + '/lib/mailUtils')
     , UserModel = require (serverCommon + '/schema/user').UserModel
     , imapRetrieve = require ('../lib/imapRetrieve');
 
@@ -14,8 +15,10 @@ var initActions = [
   appInitUtils.CONNECT_MONGO
 ];
 
+//ObjectId("521d38054e078def1a00000a")
+
 appInitUtils.initApp( 'imap', initActions, null, function() {
-  UserModel.findById ("52147bd9c7db018f2a008fd2", function (err, userInfo) {
+  UserModel.findById ("521d38054e078def1a00000a", function (err, userInfo) {
 
     var xoauthParams = daemonUtils.getXOauthParams (userInfo);
     var xoauth2gen = xoauth2.createXOAuth2Generator(xoauthParams);
@@ -50,7 +53,8 @@ appInitUtils.initApp( 'imap', initActions, null, function() {
         var uploadsDone = [];
         var onMessageEvents = [];
 
-      var fetch = myConnection.fetch('107721', { bodies: [''], size: true });
+        /*
+      var fetch = myConnection.fetch('63999', { bodies: [''], size: true });
 
       fetch.on ('message', function (msg, uid) {
         console.log ('got message', uid)
@@ -67,10 +71,9 @@ appInitUtils.initApp( 'imap', initActions, null, function() {
           fs.writeFileSync ('myfile', buffer);
         })
 
-      })
+      })*/
 
-      /*
-        var fetch = myConnection.fetch('107721', {
+        var fetch = myConnection.fetch('7', {
           bodies: 'HEADER.FIELDS (MESSAGE-ID FROM TO CC BCC DATE)',
           size: true
         });
@@ -88,15 +91,18 @@ appInitUtils.initApp( 'imap', initActions, null, function() {
               buffer += chunk.toString('utf8'); //TODO: binary?
             });
 
+
             stream.once('end', function() {
               if (info.which !== 'TEXT') {
-                var hdrs = Imap.parseHeader (buffer, null, uid);
+                var hdrs = Imap.parseHeader (buffer);
+                mailUtils.normalizeAddressArrays (hdrs);
+                console.log ('parsedheaders', hdrs)
+                console.log ('ALL RECIPIENTS', mailUtils.getAllRecipients (hdrs))
               }
             });
           });
 
         })
-        */
 
         fetch.on ('end', function () { 
           console.log ('FETCH END')

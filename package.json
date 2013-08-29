@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "async" : "=0.2.7"
-   , "imap" : "https://github.com/meetmikey/node-imap/archive/master.tar.gz"
+   , "imap" : "=0.8.2"
     , "xoauth2" : "=0.1.7"
     , "underscore" : "=1.4.4"
   },
