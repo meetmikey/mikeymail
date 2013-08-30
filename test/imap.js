@@ -18,7 +18,7 @@ var initActions = [
 //ObjectId("521d38054e078def1a00000a")
 
 appInitUtils.initApp( 'imap', initActions, null, function() {
-  UserModel.findById ("521fb1fe7def7f0e7400000a", function (err, userInfo) {
+  UserModel.findById ("522116172bc21d3f3b000bd5", function (err, userInfo) {
 
     var xoauthParams = daemonUtils.getXOauthParams (userInfo);
     var xoauth2gen = xoauth2.createXOAuth2Generator(xoauthParams);
@@ -53,8 +53,7 @@ appInitUtils.initApp( 'imap', initActions, null, function() {
         var uploadsDone = [];
         var onMessageEvents = [];
 
-        /*
-      var fetch = myConnection.fetch('63999', { bodies: [''], size: true });
+      var fetch = myConnection.fetch('31', { bodies: [''], size: true });
 
       fetch.on ('message', function (msg, uid) {
         console.log ('got message', uid)
@@ -71,9 +70,9 @@ appInitUtils.initApp( 'imap', initActions, null, function() {
           fs.writeFileSync ('myfile', buffer);
         })
 
-      })*/
-
-        var fetch = myConnection.fetch('161227', {
+      })
+/*
+        var fetch = myConnection.fetch(['15987','15992','16039'], {
           bodies: 'HEADER.FIELDS (SUBJECT MESSAGE-ID FROM TO CC BCC DATE)',
           size: true
         });
@@ -102,7 +101,7 @@ appInitUtils.initApp( 'imap', initActions, null, function() {
             });
           });
 
-        })
+        })*/
 
         fetch.on ('end', function () { 
           console.log ('FETCH END')
