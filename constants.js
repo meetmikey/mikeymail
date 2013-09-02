@@ -1,5 +1,6 @@
 var serverCommon = process.env.SERVER_COMMON;
 var utils = require(serverCommon + '/lib/utils');
+var os = require ('os');
 
 function define(name, value) {
   Object.defineProperty(exports, name, {
@@ -26,7 +27,7 @@ define ('ACCESS_TOKEN_UPDATE_TIME_BUFFER', 10*1000*60); // 10 mins
 // use azure for raw email
 define ('USE_AZURE', true);
 
-define('MY_NODE_ID', utils.getUniqueId());
+define('MY_NODE_ID', os.hostname() + '_' + utils.getUniqueId());
 
 define('TEMP_FILES_DIR', '/tmp');
 define('INDEX_NAME', 'document_index');
