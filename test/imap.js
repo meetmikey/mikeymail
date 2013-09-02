@@ -18,7 +18,7 @@ var initActions = [
 //ObjectId("521d38054e078def1a00000a")
 
 appInitUtils.initApp( 'imap', initActions, null, function() {
-  UserModel.findById ("522116172bc21d3f3b000bd5", function (err, userInfo) {
+  UserModel.findById ("52251456640e2cd25f00000a", function (err, userInfo) {
 
     var xoauthParams = daemonUtils.getXOauthParams (userInfo);
     var xoauth2gen = xoauth2.createXOAuth2Generator(xoauthParams);
@@ -53,6 +53,15 @@ appInitUtils.initApp( 'imap', initActions, null, function() {
         var uploadsDone = [];
         var onMessageEvents = [];
 
+        imapRetrieve.getIdsOfMessagesWithAttachments (myConnection, null, null, [10, 6, 9], function (err, uids) {
+          if (err) {
+            console.error (err);            
+          } else {
+            console.log (uids)
+          }
+        })
+
+      
       var fetch = myConnection.fetch('31', { bodies: [''], size: true });
 
       fetch.on ('message', function (msg, uid) {
