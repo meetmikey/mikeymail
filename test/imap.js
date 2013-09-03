@@ -18,7 +18,7 @@ var initActions = [
 //ObjectId("521d38054e078def1a00000a")
 
 appInitUtils.initApp( 'imap', initActions, null, function() {
-  UserModel.findById ("52251456640e2cd25f00000a", function (err, userInfo) {
+  UserModel.findById ("5217ab1257ea88bb1b002c05", function (err, userInfo) {
 
     var xoauthParams = daemonUtils.getXOauthParams (userInfo);
     var xoauth2gen = xoauth2.createXOAuth2Generator(xoauthParams);
