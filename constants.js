@@ -79,8 +79,9 @@ define('MARKETING_TEXT', '("opt-out" OR unsubscribe OR "viewing the newsletter" 
 
 define('MARKETING_FROM', 'from:(alerts@ OR hello@ OR hi@ OR notify@ OR notification@ OR notifications@ OR mailer-daemon@ OR @proxyvote.com OR bounces@ OR bounce@ OR pinbot@ OR reservation@ OR booking@ OR bookings@ OR newsletter@ OR elert@ OR do-not-reply@ OR notifier@ OR nagios@ OR noreply@ OR no-reply@ OR @facebookmail.com OR auto-confirm@ OR support@ OR service@ OR contact@ OR info@ OR member@ OR confirmation@ OR paypal@ OR edelivery@ OR marketing@ OR reply@ OR reservations@ OR sv@aerofs.com OR sp@aerofs.com OR www-data@web)');
 
-define('ERROR_TYPE_ALL_MAIL_DOESNT_EXIST', 'ALL_MAIL_DOESNT_EXIST_ERR')
-define('ERROR_TYPE_NO_BOX_TO_OPEN', 'NO_MAILBOX_TO_OPEN')
+define('ERROR_TYPE_ALL_MAIL_DOESNT_EXIST', 'ALL_MAIL_DOESNT_EXIST_ERR');
+define('ERROR_TYPE_NO_BOX_TO_OPEN', 'NO_MAILBOX_TO_OPEN');
+define('ERROR_TYPE_IMAP_DOMAIN_ERROR', 'IMAP_DOMAIN_ERROR');
 
 // 6 days if we try every 15 minutes after sending all mail error
 define('MAX_ALLMAIL_ONBOARDING_ATTEMPTS', 2160);
