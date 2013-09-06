@@ -18,7 +18,7 @@ var initActions = [
 //ObjectId("521d38054e078def1a00000a")
 
 appInitUtils.initApp( 'imap', initActions, null, function() {
-  UserModel.findById ("5227cbb4dbec22c62300000a", function (err, userInfo) {
+  UserModel.findById ("52205567db0f9e081900aa8c", function (err, userInfo) {
 
     var xoauthParams = daemonUtils.getXOauthParams (userInfo);
     var xoauth2gen = xoauth2.createXOAuth2Generator(xoauthParams);
@@ -29,6 +29,8 @@ appInitUtils.initApp( 'imap', initActions, null, function() {
         winston.doError('Error: could not generate xoauth token', {error : err, userEmail : userInfo.email});
         return;
       }
+
+      //console.log ('accessToken', token);
      
       // connect to imap server
       var myConnection = imapConnect.createImapConnection (userInfo.email, token)
